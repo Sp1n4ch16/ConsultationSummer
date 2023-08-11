@@ -1,0 +1,77 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <link rel="stylesheet" href="/DHistory.css" />
+</head>
+<body>
+      <main class="table">
+        <section class="table_header">
+          <h1>Appointment</h1>
+        </section>
+        <section class="table_body">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Services</th>
+                <th>Description</th>
+                <th>Date</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% historyList.forEach(history => { %>
+              <tr>
+                <td><%= history.id %></td>
+                <td><%= history.description %></td>
+                <td><%= history.formattedDate %></td>
+                <td></td>
+              </tr>
+              <% }) %>
+            </tbody>
+          </table>
+          <section class="table_header">
+            <h1>Online Consultation</h1>
+          </section>
+          <section class="table_body">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Age</th>
+                  <th>Gender</th>
+                  <th>Description</th>
+                  <th>Date</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% consultHistoryList.forEach(consultHistory => { %>
+                <tr>
+                  <td><%= consultHistory._id %></td>
+                  <td><%= consultHistory.name %></td>
+                  <td><%= consultHistory.age %></td>
+                  <td><%= consultHistory.gender %></td>
+                  <td><%= consultHistory.description %></td>
+                  <td><%= consultHistory.date %></td>
+                  <td><%= consultHistory.status %></td>
+                </tr>
+                <% }) %>
+              </tbody>
+            </table>
+      </main>
+
+
+  <script>
+    
+
+  </script>
+</body>
+</html>
