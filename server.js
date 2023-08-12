@@ -3,8 +3,8 @@ const express = require("express");
 const app = express();
 const path = require("path");
 const mongoose = require("mongoose");
-const https = require("https");
-const server = https.createServer(app);
+const http = require("http");
+const server = http.createServer(app);
 const cookieparser = require("cookie-parser");
 const crypto = require("crypto");
 const bcrypt = require("bcrypt");
@@ -69,7 +69,7 @@ app.use(
 );
 
 const { ExpressPeerServer } = require("peer");
-const peerServer = ExpressPeerServer(https, {
+const peerServer = ExpressPeerServer(http, {
   debug: true,
 });
 
@@ -180,8 +180,8 @@ app.post('/pay', (req, res) => {
         "payment_method": "paypal"
     },
     "redirect_urls": {
-        "return_url": "https://localhost:3000/success",
-        "cancel_url": "https://localhost:3000/cancel"
+        "return_url": "http://localhost:3000/success",
+        "cancel_url": "http://localhost:3000/cancel"
     },
     "transactions": [{
         "item_list": {
