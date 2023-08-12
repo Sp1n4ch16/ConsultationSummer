@@ -3,8 +3,8 @@ const express = require("express");
 const app = express();
 const path = require("path");
 const mongoose = require("mongoose");
-const http = require("http");
-const server = http.createServer(app);
+const https = require("https");
+const server = https.createServer(app);
 const cookieparser = require("cookie-parser");
 const crypto = require("crypto");
 const bcrypt = require("bcrypt");
@@ -69,7 +69,7 @@ app.use(
 );
 
 const { ExpressPeerServer } = require("peer");
-const peerServer = ExpressPeerServer(http, {
+const peerServer = ExpressPeerServer(https, {
   debug: true,
 });
 
