@@ -190,80 +190,71 @@
 
     let myVideoStream;
 
-    var getUserMedia =
-      navigator.getUserMedia ||
-      navigator.webkitGetUserMedia ||
-      navigator.mozGetUserMedia;
+const myPeer = new Peer();
 
-    navigator.mediaDevices
-      .getUserMedia({
-        video: true,
-        audio: true,
-      })
-      .then(stream => {
-        myVideoStream = stream;
-        addVideoStream(myVideo, stream);
+const peers = {};
 
-        peer.on("call", call => {
-          call.answer(stream);
-          const video = document.createElement("video");
+var getUserMedia =
+  navigator.getUserMedia ||
+  navigator.webkitGetUserMedia ||
+  navigator.mozGetUserMedia;
 
-          call.on("stream", userVideoStream => {
-            addVideoStream(video, userVideoStream);
-          });
-        });
+navigator.mediaDevices
+  .getUserMedia({
+    video: true,
+    audio: true,
+  })
+  .then(stream => {
+    myVideoStream = stream;
+    addVideoStream(myVideo, stream);
 
-        socket.on("connected", userId => {
-          connectToNewUser(userId, stream);
-        });
-        socket.on("user-disconnected", userId => {
-          if (peers[userId]) peers[userId].close();
-          video.delete()
-        });
+    myPeer.on("call", call => {
+      call.answer(stream);
+      const video = document.createElement("video");
+      call.on("stream", userVideoStream => {
+        addVideoStream(video, userVideoStream);
       });
-
-    //chat
-    socket.emit("join",name);
-
-    socket.on('user-connected',name=>{
-      let li = document.createElement("li");
-      li.innerHTML = `${name} has joined the room`;
-      all_messages.append(li);
-      main__chat__window.scrollTop = main__chat__window.scrollHeight;
-      chatInputBox.value = "";
-    })
-    socket.on('email-connected',email=>{
-      let li = document.createElement("li");
-      li.innerHTML = `Patient Email: ${email} `;
-      all_messages.append(li);
-      main__chat__window.scrollTop = main__chat__window.scrollHeight;
-      chatInputBox.value = "";
-    })
-    socket.on('user-disconnected',name=>{
-      let li = document.createElement("li");
-      li.innerHTML = `${name} has left the room`;
-      all_messages.append(li);
-      main__chat__window.scrollTop = main__chat__window.scrollHeight;
-      chatInputBox.value = "";
-    })
-    socket.on('chat-message', data => {
-      let li = document.createElement("li");
-      li.innerHTML = (`${data.name}: ${data.message}`);
-      all_messages.append(li);
-      main__chat__window.scrollTop = main__chat__window.scrollHeight;
-    })
-
-    document.addEventListener("keydown", (e) => {
-      if (e.which === 13 && chatInputBox.value != "") {
-        const msg=chatInputBox.value
-        let li = document.createElement("li");
-        li.innerHTML = "You: "+msg;
-        all_messages.append(li);
-        main__chat__window.scrollTop = main__chat__window.scrollHeight;
-        socket.emit("send-chat-message", chatInputBox.value);
-        chatInputBox.value = "";
-      }
     });
+
+    socket.on("user-connected", userId => {
+      console.log("user-connected peerID " + userId);
+      connectToNewUser(userId, stream);
+    });
+  });
+
+socket.on("user-disconnected", userId => {
+  if (peers[userId]) peers[userId].close();
+  console.log("user disconnected" + userId);
+});
+
+myPeer.on("open", id => {
+  socket.emit("join-room", ROOM_ID, id, name);
+});
+
+socket.on("chat-message", data => {
+  let li = document.createElement("li");
+  li.innerHTML = `${data.name}: ${data.message}`;
+  all_messages.append(li);
+  main__chat__window.scrollTop = main__chat__window.scrollHeight;
+});
+socket.on("join-name", name => {
+  let li = document.createElement("li");
+  li.innerHTML = `${name}: has joined the room`;
+  all_messages.append(li);
+  main__chat__window.scrollTop = main__chat__window.scrollHeight;
+});
+
+document.addEventListener("keydown", e => {
+  if (e.which === 13 && chatInputBox.value != "") {
+    const msg = chatInputBox.value;
+    let li = document.createElement("li");
+    li.innerHTML = "You: " + msg;
+    all_messages.append(li);
+    main__chat__window.scrollTop = main__chat__window.scrollHeight;
+    socket.emit("send-chat-message", chatInputBox.value);
+    chatInputBox.value = "";
+  }
+});
 
     //videocall function
     peer.on("call", function (call) {
