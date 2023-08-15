@@ -46,6 +46,7 @@
     </section>
     <section class="table_header">
       <h1>Online Consultation Appointment</h1>
+      <button class="sms-button">SMS</button>
     </section>
     <section class="table_body">
       <table>
@@ -88,6 +89,7 @@
   <script>
     const cancelButtons = document.querySelectorAll('.cancel-button');
     const paymentButtons = document.querySelectorAll('.payment-button');
+    const smsButtons = document.querySelectorAll('.sms-button');
 
     cancelButtons.forEach((button) => {
       button.addEventListener('click', async () => {
@@ -142,6 +144,25 @@
     document.body.appendChild(form);
     form.submit();
   }
+
+  smsButtons.forEach((button) => {
+      button.addEventListener('click', async () => {
+        try {
+          const response = await fetch('/smsNotification', {
+            method: 'POST'
+          });
+
+          if (response.ok) {
+            // Refresh the page after successful cancellation
+            location.reload();
+          } else {
+            console.error('Appointment cancellation failed:', response);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      });
+    });
 
   </script>
 </body>

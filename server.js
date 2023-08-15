@@ -16,6 +16,10 @@ const io = require("socket.io")(server, { cors: { origin: "*" } });
 require("dotenv").config();
 const paypal = require("paypal-rest-sdk");
 
+const accountSid = 'AC67744b6b3dd1ed03a116bd71cffafe0e';
+const authToken = 'adef90ea2422b2814b4ebbe9a791351e';
+const client = require('twilio')(accountSid, authToken);
+
 const verifyEmail = require("./src/verify");
 const calculateAge = require("./src/calculateAge");
 const loginVerify = require("./src/login-verify");
@@ -169,6 +173,16 @@ app.post(
 app.post('/PAppointment', upload.single('image'),PAppointmentAPI, (req, res) => {})
 
 app.post("/cancel-appointment",cancelAppointment, async (req, res) => {});
+
+app.post("/smsNotification", async (req, res) => {
+  client.messages
+    .create({
+                body:'Testing',
+                to: '+639611580504',
+                from:'+12295972175'
+    })
+    .then(message => console.log(message.sid))
+});
 
 let consult; // Declare consult variable outside of the route
 

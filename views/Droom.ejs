@@ -13,6 +13,7 @@
     <script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD"></script>
     <script src="https://unpkg.com/peerjs@1.4.7/dist/peerjs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.4.7/peerjs.min.js"></script>
+    <script defer src="screen-record.js"></script>
     <script
       src="https://cdn.socket.io/4.6.0/socket.io.min.js"
       integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+"
@@ -118,7 +119,32 @@
     <div class="screen-record-popup">
       <div class="screen-record-content">
         <img src="./close.jpg" alt="Close" class="screen-record-close" />
-        <video width="700" height="400" controls></video>
+
+          <div id="container">
+          <video class="sc-video" src="" id="gum" playsinline autoplay muted></video>
+          <video class="sc-video" src="" id="recorded" playsinline loop></video>
+          <audio id="recordedAudio" controls></audio>
+
+
+          <div>
+            <button id="start">Start</button>
+            <button id="record" disabled>Record</button>
+            <button id="play" disabled>Play</button>
+            <button id="download" disabled>Download</button>
+          </div>
+
+          <div>
+            <h4>Media Stream Constraints options</h4>
+            <p>
+              Echo cancellation: <input type="checkbox" id="echoCancellation" />
+            </p>
+          </div>
+
+          <div>
+            <span id="errorMsg"></span>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -149,49 +175,52 @@
     const videoGrid = document.getElementById("video-grid");
     const myVideo = document.createElement("video");
     const screen = document.getElementById("main");
+
+    console.log(ROOM_ID)
+    console.log(name)
   
     myVideo.muted = true;
 
     var peer = new Peer();
 
-/*var peer = new Peer(undefined, {
-  host: "/",
-  port: "3001",
-});*/
+    /*var peer = new Peer(undefined, {
+      host: "/",
+      port: "3001",
+    });*/
 
-let myVideoStream;
+    let myVideoStream;
 
-var getUserMedia =
-  navigator.getUserMedia ||
-  navigator.webkitGetUserMedia ||
-  navigator.mozGetUserMedia;
+    var getUserMedia =
+      navigator.getUserMedia ||
+      navigator.webkitGetUserMedia ||
+      navigator.mozGetUserMedia;
 
-navigator.mediaDevices
-  .getUserMedia({
-    video: true,
-    audio: true,
-  })
-  .then(stream => {
-    myVideoStream = stream;
-    addVideoStream(myVideo, stream);
+    navigator.mediaDevices
+      .getUserMedia({
+        video: true,
+        audio: true,
+      })
+      .then(stream => {
+        myVideoStream = stream;
+        addVideoStream(myVideo, stream);
 
-    peer.on("call", call => {
-      call.answer(stream);
-      const video = document.createElement("video");
+        peer.on("call", call => {
+          call.answer(stream);
+          const video = document.createElement("video");
 
-      call.on("stream", userVideoStream => {
-        addVideoStream(video, userVideoStream);
+          call.on("stream", userVideoStream => {
+            addVideoStream(video, userVideoStream);
+          });
+        });
+
+        socket.on("connected", userId => {
+          connectToNewUser(userId, stream);
+        });
+        socket.on("user-disconnected", userId => {
+          if (peers[userId]) peers[userId].close();
+          video.delete()
+        });
       });
-    });
-
-    socket.on("connected", userId => {
-      connectToNewUser(userId, stream);
-    });
-    socket.on("user-disconnected", userId => {
-      if (peers[userId]) peers[userId].close();
-      video.delete()
-    });
-  });
 
     //chat
     socket.emit("join",name);
@@ -303,34 +332,34 @@ navigator.mediaDevices
       };
 
       const setPlayVideo = () => {
-        const html = `<i class="unmute fa fa-pause-circle"></i>
-  <span class="unmute">Resume Video</span>`;
-        document.getElementById("playPauseVideo").innerHTML = html;
-      };
+          const html = `<i class="unmute fa fa-pause-circle"></i>
+      <span class="unmute">Resume Video</span>`;
+            document.getElementById("playPauseVideo").innerHTML = html;
+          };
 
-      const setStopVideo = () => {
-        const html = `<i class=" fa fa-video-camera"></i>
-  <span class="">Pause Video</span>`;
-        document.getElementById("playPauseVideo").innerHTML = html;
-      };
+          const setStopVideo = () => {
+            const html = `<i class=" fa fa-video-camera"></i>
+      <span class="">Pause Video</span>`;
+            document.getElementById("playPauseVideo").innerHTML = html;
+          };
 
-      const setUnmuteButton = () => {
-        const html = `<i class="unmute fa fa-microphone-slash"></i>
-  <span class="unmute">Unmute</span>`;
-        document.getElementById("muteButton").innerHTML = html;
-      };
-      const setMuteButton = () => {
-        const html = `<i class="fa fa-microphone"></i>
-  <span>Mute</span>`;
-        document.getElementById("muteButton").innerHTML = html;
-      };
-      function appendMessage(message) {
-        console.log(message)
-        let li = document.createElement("li");
-            li.innerHTML = message;
-            all_messages.append(li);
-            main__chat__window.scrollTop = main__chat__window.scrollHeight;
-      }
+          const setUnmuteButton = () => {
+            const html = `<i class="unmute fa fa-microphone-slash"></i>
+      <span class="unmute">Unmute</span>`;
+            document.getElementById("muteButton").innerHTML = html;
+          };
+          const setMuteButton = () => {
+            const html = `<i class="fa fa-microphone"></i>
+      <span>Mute</span>`;
+            document.getElementById("muteButton").innerHTML = html;
+          };
+        function appendMessage(message) {
+          console.log(message)
+          let li = document.createElement("li");
+              li.innerHTML = message;
+              all_messages.append(li);
+              main__chat__window.scrollTop = main__chat__window.scrollHeight;
+        }
 
 
       //Paypal
@@ -372,73 +401,9 @@ navigator.mediaDevices
         document.querySelector(".leave-popup").style.display = "none";
       });
 
-
-      let mediaRecorder; // Global variable to store the MediaRecorder instance
-
-      // Function to start screen recording
-      function startScreenRecording() {
-        navigator.mediaDevices.getDisplayMedia({ video: true, audio: { echoCancellation: true } })
-          .then(function (stream) {
-            const video = document.querySelector(".screen-record-content video");
-            video.srcObject = stream;
-            video.muted = false;
-            video.play();
-
-            mediaRecorder = new MediaRecorder(stream, { mimeType: 'video/webm; codecs=vp9,opus' });
-            const chunks = [];
-
-            mediaRecorder.ondataavailable = function (event) {
-              chunks.push(event.data);
-            };
-
-            mediaRecorder.onstop = function () {
-              const recordingBlob = new Blob(chunks, { type: "video/webm" });
-              const videoURL = URL.createObjectURL(recordingBlob);
-              const videoElement = document.createElement("video");
-              videoElement.src = videoURL;
-              videoElement.controls = true;
-              videoElement.width = "700";
-              videoElement.height = "400";
-              videoElement.muted = false; // Add this line
-
-              const recordingPopup = document.querySelector(
-                ".screen-record-popup"
-              );
-              const recordingContent = recordingPopup.querySelector(
-                ".screen-record-content"
-              );
-              recordingContent.innerHTML = ""; // Clear previous content
-              recordingContent.appendChild(videoElement);
-
-              recordingPopup.style.display = "flex";
-            };
-
-            mediaRecorder.start();
-          })
-          .catch(function (error) {
-            console.error("Error accessing screen recording:", error);
-          });
-      }
-
-      // Function to stop screen recording
-      function stopScreenRecording() {
-        if (mediaRecorder && mediaRecorder.state !== "inactive") {
-          mediaRecorder.stop();
-        }
-      }
-
-      // Function to handle the screen recording button click
-      function handleScreenRecord() {
-        const screenRecordButton = document.getElementById("ScreenRecord");
-        if (screenRecordButton.classList.contains("recording")) {
-          // Stop recording
-          stopScreenRecording();
-          screenRecordButton.classList.remove("recording");
-        } else {
-          // Start recording
-          startScreenRecording();
-          screenRecordButton.classList.add("recording");
-        }
+      //ScreenRecord
+      const startScreenRecording = () => {
+        document.querySelector(".screen-record-popup").style.display = "flex";
       }
 
   </script>

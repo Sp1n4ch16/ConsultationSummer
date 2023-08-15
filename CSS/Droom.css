@@ -231,8 +231,8 @@ video {
 }
 
 .screen-record-content {
-  height: 500px;
-  width: 800px;
+  height: 80%;
+  width: 80%;
   background: #fff;
   padding: 20px;
   border-radius: 5px;
@@ -250,6 +250,26 @@ video {
   box-shadow: 6px 6px 29px -4px rgba(0, 0, 0, 0.75);
   cursor: pointer;
 }
+
+.sc-video {
+  background-color: rgb(193, 193, 193);
+  height: 280px;
+  margin: 10px;
+}
+
+.screen-record-content button{
+  margin: 10px 30px;
+  width: 150px;
+}
+
+.screen-record-content h4 {
+  margin: 10px;
+}
+
+.screen-record-content p {
+  margin: 10px;
+}
+
 
 /*    Leave Meeting   */
 
