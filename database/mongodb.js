@@ -98,6 +98,9 @@ const appointmentSchema = new mongoose.Schema(
     status: {
       type: String,
     },
+    smsSent:{
+      type:String,
+    }
   },
   {
     timestamps: true,
@@ -133,6 +136,9 @@ const onlineconsultationSchema = new mongoose.Schema(
     status: {
       type: String,
     },
+    smsSent:{
+      type:String,
+    }
   },
   {
     timestamps: true,

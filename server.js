@@ -15,6 +15,7 @@ const { v4: uuidv4 } = require("uuid");
 const io = require("socket.io")(server, { cors: { origin: "*" } });
 require("dotenv").config();
 const paypal = require("paypal-rest-sdk");
+var cron = require('node-cron');
 
 const accountSid = 'AC67744b6b3dd1ed03a116bd71cffafe0e';
 const authToken = 'adef90ea2422b2814b4ebbe9a791351e';
@@ -27,6 +28,8 @@ const transferAppointmentsToHistory = require("./src/trasnferAppointemt");
 const { storage, upload } = require("./src/multer");
 const transporter = require("./src/nodemailer");
 const createToken = require("./src/jwt");
+const automaticSMS = require("./src/automaticsms");
+automaticSMS()
 
 const myappointmentAPI = require("./API/getmyappointment");
 const dhomeAPI = require("./API/getDHome");
@@ -106,6 +109,7 @@ paypal.configure({
   client_secret:
     "EFI2B7zQ5HDBO_nNEe3hjwGeytc7LtGXNpzrpxCATSj93Gw5jDKvIhyMRshsXltx4LYC2Q5hndU8s3L_",
 });
+
 
 app.get("/", (req, res) => {
   res.render("login");

@@ -25,6 +25,7 @@
     "moment": "^2.29.4",
     "mongoose": "^7.3.4",
     "multer": "^1.4.5-lts.1",
+    "node-cron": "^3.0.2",
     "nodemailer": "^6.9.3",
     "paypal-rest-sdk": "^1.8.1",
     "peer": "^1.0.0",
