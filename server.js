@@ -203,8 +203,8 @@ app.post('/pay', (req, res) => {
         "payment_method": "paypal"
     },
     "redirect_urls": {
-        "return_url": "/success",
-        "cancel_url": "/cancel"
+        "return_url": "https://consultationsummer.onrender.com/success",
+        "cancel_url": "https://consultationsummer.onrender.com/cancel"
     },
     "transactions": [{
         "item_list": {
@@ -253,7 +253,7 @@ app.get('/success', async (req, res) => {
         throw error;
     } else {
         console.log(JSON.stringify(payment));
-        res.redirect('myappointment');
+        res.send('myappointment');
     }
   });
 });
