@@ -253,7 +253,7 @@ app.get('/success', async (req, res) => {
         throw error;
     } else {
         console.log(JSON.stringify(payment));
-        res.send('myappointment');
+        res.redirect('myappointment');
     }
   });
 });
