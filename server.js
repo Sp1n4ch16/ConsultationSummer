@@ -16,6 +16,8 @@ const io = require("socket.io")(server, { cors: { origin: "*" } });
 require("dotenv").config();
 const paypal = require("paypal-rest-sdk");
 var cron = require('node-cron');
+const fs = require('fs')
+const multer = require('multer')
 
 const accountSid = 'AC67744b6b3dd1ed03a116bd71cffafe0e';
 const authToken = 'adef90ea2422b2814b4ebbe9a791351e';
@@ -26,10 +28,12 @@ const calculateAge = require("./src/calculateAge");
 const loginVerify = require("./src/login-verify");
 const transferAppointmentsToHistory = require("./src/trasnferAppointemt");
 const { storage, upload } = require("./src/multer");
+const uploadprescription = multer({ dest: "uploads/" });
 const transporter = require("./src/nodemailer");
 const createToken = require("./src/jwt");
 const automaticSMS = require("./src/automaticsms");
 automaticSMS()
+
 
 const myappointmentAPI = require("./API/getmyappointment");
 const dhomeAPI = require("./API/getDHome");
@@ -289,27 +293,41 @@ app.get("/Droom:Droom", (req, res) => {
   });
 });
 
-app.post("/approve-appointment", async (req, res) => {
-  try {
-    //await client.connect();
-    //const db = client.db("<database-name>");
-    const { appointmentId } = req.body;
+app.post("/approve-appointment", () => {});
 
-    // Retrieve the appointment to be canceled
-    const onlineConsult = await OnlineConsult.findOne({ _id: appointmentId });
-
-    if (onlineConsult) {
-      (onlineConsult.status = "Approved"),
-        (onlineConsult.isVerified = true),
-        await onlineConsult.save();
-    } else {
-      res.send("No appointmentId match to be approve");
-    }
-    res.sendStatus(200);
-  } catch (error) {
-    console.error("Error canceling appointment:", error);
-    res.status(500).send("An error occurred");
+app.post("/prescription",uploadprescription.single("image"), (req, res) => {
+  if (!req.file) {
+    return res.status(400).send("No image uploaded.");
   }
+  const picturePath = path.join(__dirname, "pictures", req.file.originalname);
+  fs.renameSync(req.file.path, picturePath);
+
+  const data = {
+    name: req.body.email,
+    picture: req.file.originalname,
+  };
+  //send verification to the user
+  var mailOptions = {
+    from: ' "Verify your email" <dummy8270@gmail.com>',
+    to: data.name,
+    subject: "Dr. Ryan -verify your email",
+    html: `<h2> Thanks for Consulting in Dr. Ryan Dental Clinic here's your prescription! </h2>`,
+    attachments: [
+      {
+        filename: data.picture,
+        path: `pictures/${data.picture}`,
+      },
+    ],
+  };
+
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("Prescription has been sent to the patient");
+      res.redirect("Droom");
+    }
+  });
 });
 
 server.listen(3000, () => {
