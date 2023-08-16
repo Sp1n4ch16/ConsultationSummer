@@ -33,6 +33,7 @@ const transporter = require("./src/nodemailer");
 const createToken = require("./src/jwt");
 const automaticSMS = require("./src/automaticsms");
 automaticSMS()
+const approvedAPI = require('./src/approve')
 
 
 const myappointmentAPI = require("./API/getmyappointment");
@@ -293,7 +294,7 @@ app.get("/Droom:Droom", (req, res) => {
   });
 });
 
-app.post("/approve-appointment", () => {});
+app.post("/approve-appointment", approvedAPI, () => {});
 
 app.post("/prescription",uploadprescription.single("image"), (req, res) => {
   if (!req.file) {
