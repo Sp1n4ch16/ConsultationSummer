@@ -29,12 +29,14 @@ const loginAPI = async (req, res, next) => {
           const name = check.full_name;
           const age = check.age;
           const gender = check.gender;
+          const phone = check.contact_number
           //store token in cookie
           res.cookie("access-token", token);
           res.cookie("emailUser", user);
           res.cookie("name", name);
           res.cookie("age", age);
           res.cookie("gender", gender);
+          res.cookie("phone", phone);
           res.redirect("loginSuccess");
         }
       } else {

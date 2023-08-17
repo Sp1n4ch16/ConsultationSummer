@@ -9,6 +9,7 @@ const postPOnlineConsultAPI = async (req, res) => {
     email: req.cookies.emailUser,
     age: req.cookies.age,
     gender: req.cookies.gender,
+    contact_number: req.cookies.phone,
     isVerified: false,
     paid: "Unpaid",
     status: "Waiting to Approved",

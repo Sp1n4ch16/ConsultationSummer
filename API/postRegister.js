@@ -3,16 +3,20 @@ const calculateAge = require("../src/calculateAge");
 const crypto = require("crypto");
 const { Register } = require("../database/mongodb");
 const transporter = require("../src/nodemailer");
+const formatContactNumber = require ("../src/changeContactFormat")
 
 const registerAPI = async (req, res) => {
   try {
     const userBirthdate = req.body.birthdate;
     const userAge = calculateAge(userBirthdate);
+    const userContact = req.body.contactNumber;
+    const userPhone = formatContactNumber(userContact)
+    console.log(userPhone)
     const data = {
       first_name: req.body.firstName,
       last_name: req.body.lastName,
       full_name: req.body.firstName + " " + req.body.lastName,
-      contact_number: req.body.contactNumber,
+      contact_number: userPhone,
       address: req.body.address,
       birthdate: new Date(req.body.birthdate),
       age: userAge,

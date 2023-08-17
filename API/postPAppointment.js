@@ -10,6 +10,7 @@ const PAppointmentAPI = async (req, res) => {
       description: req.body.description,
       gender: req.cookies.gender,
       services: req.body.services,
+      contact_number: req.cookies.phone,
       email: req.cookies.emailUser,
     };
     try {

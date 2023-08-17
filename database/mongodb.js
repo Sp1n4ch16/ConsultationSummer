@@ -98,6 +98,9 @@ const appointmentSchema = new mongoose.Schema(
     status: {
       type: String,
     },
+    contact_number:{
+      type: String
+    },
     smsSent:{
       type:String,
     }
@@ -135,6 +138,9 @@ const onlineconsultationSchema = new mongoose.Schema(
     },
     status: {
       type: String,
+    },
+    contact_number:{
+      type: String
     },
     smsSent:{
       type:String,
@@ -228,7 +234,7 @@ const onlineConsultDoneschema = new mongoose.Schema(
     },
     gender: {
       type: String,
-    }
+    },
   },
   {
     timestamps: true,

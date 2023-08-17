@@ -203,22 +203,22 @@ app.post('/pay', (req, res) => {
         "payment_method": "paypal"
     },
     "redirect_urls": {
-        "return_url": "https://consultationsummer.onrender.com/success",
-        "cancel_url": "https://consultationsummer.onrender.com/cancel"
+        "return_url": "http://localhost:3000/success",
+        "cancel_url": "http://localhost:3000/cancel"
     },
     "transactions": [{
         "item_list": {
             "items": [{
                 "name": "Red Sox Hat",
                 "sku": "55",
-                "price": "1.00",
+                "price": "17.00",
                 "currency": "PHP",
                 "quantity": 1
             }]
         },
         "amount": {
             "currency": "PHP",
-            "total": "1.00"
+            "total": "17.00"
         },
         "description": "Best Dentist ever"
     }]
@@ -242,7 +242,7 @@ app.get('/success', async (req, res) => {
     "transactions": [{
         "amount": {
             "currency": "PHP",
-            "total": "1.00"
+            "total": "17.00"
         }
     }]
   };

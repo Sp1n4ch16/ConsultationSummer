@@ -3,10 +3,9 @@ const cron = require("node-cron")
 const twilio = require ("twilio")
 
 
-const accountSid = 'AC67744b6b3dd1ed03a116bd71cffafe0e';
-const authToken = 'b50f8f553b326b24efa92b526443f061';
+const accountSid = 'AC5b1d4b6644db48a2d6833c93df7dcfab';
+const authToken = 'd3565a7f4dc0c3abd9e83260807e9894';
 const client = require('twilio')(accountSid, authToken);
-
 
 const automaticSMS =  (req, res) => {
     
@@ -22,19 +21,20 @@ const automaticSMS =  (req, res) => {
                 const smsSendTime = new Date(appointmentDate.getTime() - 30 * 60 * 1000);
         
                 if (currentTime >= smsSendTime && currentTime < appointmentDate && !appointment.smsSent) {
-                    // Update the appointment's smsSent property to true
-                    appointment.smsSent = true;
-                    appointment.save();
-        
+                    const number = appointment.contact_number
                     // Send the SMS
                     client.messages
                         .create({
-                            body: 'Testing 30min',
-                            to: '+639611580504',
-                            from: '+12295972175'
+                            body: 'You have Appointment in 30 minutes',
+                            to: `${number}`,
+                            from: '+16292765493'
                         })
                         .then(message => console.log('SMS sent:', message.sid))
                         .catch(error => console.error('Error sending SMS:', error));
+
+                    // Update the appointment's smsSent property to true
+                    appointment.smsSent = true;
+                    appointment.save();
                 }
             });
 
@@ -46,13 +46,13 @@ const automaticSMS =  (req, res) => {
                     // Update the appointment's smsSent property to true
                     consult.smsSent = true;
                     consult.save();
-        
+                    const number = consult.contact_number
                     // Send the SMS
                     client.messages
                         .create({
-                            body: 'Testing 30min',
-                            to: '+639611580504',
-                            from: '+12295972175'
+                            body: 'You have Online Consultation in 30 minutes',
+                            to: `${number}`,
+                            from: '+16292765493',
                         })
                         .then(message => console.log('SMS sent:', message.sid))
                         .catch(error => console.error('Error sending SMS:', error));
