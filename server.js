@@ -183,11 +183,11 @@ app.post('/PAppointment', upload.single('image'),PAppointmentAPI, (req, res) => 
 
 app.post("/cancel-appointment",cancelAppointment, async (req, res) => {});
 
-let consult; // Declare consult variable outside of the route
-let fee;
+var consult; // Declare consult variable outside of the route
+var fee;
 
 app.post('/pay', async (req, res) => {
-  const consult = req.body.appointmentId; // Declare consult using 'const'
+  consult = req.body.appointmentId; // Declare consult using 'const'
   const doctor = await doctorInfo.findOne({}); // Use findOne instead of find
   fee = doctor.consultation_fee;
 
@@ -197,8 +197,8 @@ app.post('/pay', async (req, res) => {
         "payment_method": "paypal"
     },
     "redirect_urls": {
-        "return_url": "https://consultationsummer.onrender.com/success",
-        "cancel_url": "https://consultationsummer.onrender.com//cancel"
+        "return_url": "http://localhost:3000/success",
+        "cancel_url": "http://localhost:3000/cancel"
     },
     "transactions": [{
         "item_list": {
@@ -222,10 +222,16 @@ app.get('/success', async (req, res) => {
   const payerId = req.query.PayerID;
   const paymentId = req.query.paymentId;
   const transactionId = await OnlineConsult.findOne({_id: consult})
-  console.log(transactionId)
   try {
+
+    if (!transactionId) {
+      console.log('Consult not found');
+      return res.status(404).send('Consult not found');
+    }
+
     transactionId.paid = "Paid";
     await transactionId.save();
+   console.log('Transaction marked as paid:', transactionId);
   } catch (error) {
     console.log(error);
   }

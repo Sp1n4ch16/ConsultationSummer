@@ -15,7 +15,6 @@ const cancelAppointment = async (req, res) => {
           // Transfer the appointment to the history collection
           appointment.status = "Cancel"
           await appointment.save();
-          console.log(appointment)
           await appointmentDone.insertMany(appointment);
           // Delete the appointment from the original collection
           await Appointment.deleteMany({ _id: appointmentId });
