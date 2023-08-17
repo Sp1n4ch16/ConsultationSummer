@@ -183,47 +183,40 @@ app.post('/PAppointment', upload.single('image'),PAppointmentAPI, (req, res) => 
 
 app.post("/cancel-appointment",cancelAppointment, async (req, res) => {});
 
-app.post("/smsNotification", async (req, res) => {
-  client.messages
-    .create({
-                body:'Testing',
-                to: '+639611580504',
-                from:'+12295972175'
-    })
-    .then(message => console.log(message.sid))
-});
-
 let consult; // Declare consult variable outside of the route
+let fee;
 
-app.post('/pay', (req, res) => {
-  consult = req.body.appointmentId
+app.post('/pay', async (req, res) => {
+  const consult = req.body.appointmentId; // Declare consult using 'const'
+  const doctor = await doctorInfo.findOne({}); // Use findOne instead of find
+  fee = doctor.consultation_fee;
+
   const create_payment_json = {
     "intent": "sale",
     "payer": {
         "payment_method": "paypal"
     },
     "redirect_urls": {
-        "return_url": "http://localhost:3000/success",
-        "cancel_url": "http://localhost:3000/cancel"
+        "return_url": "https://consultationsummer.onrender.com/success",
+        "cancel_url": "https://consultationsummer.onrender.com//cancel"
     },
     "transactions": [{
         "item_list": {
             "items": [{
-                "name": "Red Sox Hat",
-                "sku": "55",
-                "price": "17.00",
+                "name": "Consultation Fee",
+                "sku": "001",
+                "price":fee, // Use the fixed fee value here
                 "currency": "PHP",
                 "quantity": 1
             }]
         },
         "amount": {
             "currency": "PHP",
-            "total": "17.00"
+            "total": fee // Use the fixed fee value here
         },
-        "description": "Best Dentist ever"
+        "description": "Best Dentist Ever"
     }]
 };
-
 
 app.get('/success', async (req, res) => {
   const payerId = req.query.PayerID;
@@ -242,7 +235,7 @@ app.get('/success', async (req, res) => {
     "transactions": [{
         "amount": {
             "currency": "PHP",
-            "total": "17.00"
+            "total": fee
         }
     }]
   };
@@ -329,6 +322,31 @@ app.post("/prescription",uploadprescription.single("image"), (req, res) => {
       res.redirect("Droom");
     }
   });
+});
+
+app.get("/DoctorInfo", (req, res) => {
+  res.render("DoctorInfo");
+});
+
+app.post("/DoctorInfo", async (req, res) => {
+  const fullName = req.body.doctorName;
+  const date = req.body.date;
+  const consultation_fee = req.body.consultationFee+".00";
+
+  doctorInfo
+    .findOneAndUpdate(
+      {},
+      { fullName, date, consultation_fee },
+      { upsert: true }
+    )
+    .then(() => {
+      console.log("Data updated successfully");
+      res.redirect("DHome");
+    })
+    .catch(error => {
+      console.log("Error updating data:", error);
+      res.status(500).send("Error updating data");
+    });
 });
 
 server.listen(3000, () => {
