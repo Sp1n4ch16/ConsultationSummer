@@ -4,7 +4,7 @@ const twilio = require ("twilio")
 
 
 const accountSid = 'AC5b1d4b6644db48a2d6833c93df7dcfab';
-const authToken = 'd3565a7f4dc0c3abd9e83260807e989(4)';
+const authToken = 'de2e2e765e6d2336400cb91825becf5d';
 const client = require('twilio')(accountSid, authToken);
 
 const automaticSMS =  (req, res) => {
