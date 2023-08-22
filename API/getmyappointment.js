@@ -39,9 +39,7 @@ const myappointmentAPI = async (req, res, next) => {
         onlineConsultDate.getTime() + 60 * 60 * 1000
       );
       const enabled =
-        onlineConsult.paid === "Paid" &&
-        currentTime > onlineConsultDate &&
-        currentTime < oneHourAhead;
+        onlineConsult.paid === "Paid" && currentTime > onlineConsultDate && currentTime < oneHourAhead;
       const formattedDate = moment(onlineConsultDate).format(
         "MMMM Do YYYY, h:mm:ss a"
       );

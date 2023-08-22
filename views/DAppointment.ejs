@@ -16,26 +16,61 @@
           <table>
             <thead>
               <tr>
-                <th>Name</th>
+                <th>ID</th>
                 <th>Email</th>
+                <th>Age</th>
                 <th>Description</th>
                 <th>Services</th>
                 <th>Date</th>
-
+                <th>Status</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
               <% appointmentList.forEach(appointment => { %>
               <tr>
-                <td><%= appointment.name %></td>
+                <td><%= appointment._id %></td>
                 <td><%= appointment.email %></td>
-                <td class="description"><%= appointment.description %></td>
+                <td><%= appointment.age %></td>
+                <td><%= appointment.description %></td>
                 <td><%= appointment.services %></td>
                 <td><%= appointment.formattedDate %></td>
+                <td><%= appointment.status %></td>
+                <td><button class="cancel-button">Cancel</button></td>
               </tr>
               <% }) %>
             </tbody>
           </table>
         </section>
+
+        <script>
+          const cancelButtons = document.querySelectorAll('.cancel-button');
+
+          cancelButtons.forEach((button) => {
+            button.addEventListener('click', async () => {
+              const appointmentId = button.closest('tr').querySelector('td:first-child').textContent;
+              
+              try {
+                const response = await fetch('/cancel-appointment', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({ appointmentId }),
+                });
+
+                if (response.ok) {
+                  // Refresh the page after successful cancellation
+                  location.reload();
+                } else {
+                  console.error('Appointment cancellation failed:', response);
+                }
+              } catch (error) {
+                console.log(error);
+              }
+            });
+          });
+
+        </script>
   </body>
 </html>
