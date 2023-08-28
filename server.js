@@ -183,6 +183,69 @@ app.post('/PAppointment', upload.single('image'),PAppointmentAPI, (req, res) => 
 
 app.post("/cancel-appointment",cancelAppointment, async (req, res) => {});
 
+app.post('/docCancel-appointment', async (req, res) => {
+  try {
+    //await client.connect();
+    //const db = client.db("<database-name>");
+    const { appointmentId } = req.body;
+
+    // Retrieve the appointment to be canceled
+    const appointment = await Appointment.findOne({ _id: appointmentId });
+    const onlineConsult = await OnlineConsult.findOne({ _id: appointmentId });
+
+    if (appointment) {
+      var mailOptions = {
+        from: ' "Your Appointment is Cancel" <dummy8270@gmail.com>',
+        to: appointment.email,
+        subject: "Dr. Ryan Pangilinan dental clinic",
+        html: `<h2> Your appointment has been cancel</h2>`,
+      };
+    
+      transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log("cancel message has been sent to the patient");
+        }
+      });
+
+      // Transfer the appointment to the history collection
+      appointment.status = "Cancel"
+      await appointment.save();
+      await appointmentDone.insertMany(appointment);
+      // Delete the appointment from the original collection
+      await Appointment.deleteMany({ _id: appointmentId });
+
+
+    } else if(onlineConsult) {
+
+      var mailOptions = {
+        from: ' "Your Appointment is Cancel" <dummy8270@gmail.com>',
+        to: onlineConsult.email,
+        subject: "Dr. Ryan Pangilinan dental clinic",
+        html: `<h2> Your appointment has been cancel</h2>`,
+      };
+    
+      transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log("cancel message has been sent to the patient");
+        }
+      });
+
+      onlineConsult.status = "Cancel"
+      await onlineConsult.save()
+      await consultDone.insertMany(onlineConsult);
+      await OnlineConsult.deleteMany({ _id: appointmentId });
+    }
+    res.sendStatus(200);
+  } catch (error) {
+    console.error("Error canceling appointment:", error);
+    res.status(500).send("An error occurred");
+  }
+})
+
 var consult; // Declare consult variable outside of the route
 var fee;
 

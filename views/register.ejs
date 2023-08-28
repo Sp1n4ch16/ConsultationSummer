@@ -62,6 +62,25 @@
         flatpickr("#datetime", {
         dateFormat: "Y-m-d",
       });
+      document
+        .getElementById("myForm")
+        .addEventListener("submit", function (event) {
+          const pass = document.getElementById("pass").value;
+          const cpass = document.getElementById("cpass").value;
+
+          if (pass !== cpass) {
+            alert("Password and Confirm password didn't match");
+            var textInputs = document.querySelectorAll(
+              'input[type="password"]'
+            );
+            textInputs.forEach(function (input) {
+              input.value = "";
+            });
+            event.preventDefault();
+          } else {
+            alert("You're now registered!");
+          }
+        });
     </script>
   </body>
 </html>

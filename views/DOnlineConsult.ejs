@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/DOnlineConsult.css" />
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <title>Document</title>
   </head>
   <body>
@@ -48,11 +49,48 @@
             </tbody>
           </table>
         </section>
-
+    </main>
 
         <script>
-
           const approveButtons = document.querySelectorAll('.approve-button');
+          const cancelButtons = document.querySelectorAll('.cancel-button')
+
+          // Add a click event listener to each "Send" button
+          cancelButtons.forEach((button) => {
+            const appointmentId = button.closest('tr').querySelector('td:first-child').textContent;
+            button.addEventListener('click', async () => {
+              swal({
+                  title: "Are you sure you want to cancel this appointment?",
+                  icon: "warning",
+                  buttons: true,
+                  dangerMode: true,
+              })
+              .then(async function (isOkay) {
+                  if (isOkay) {
+                    const appointmentId = button.closest('tr').querySelector('td:first-child').textContent;
+                    try {
+                    const response = await fetch('/docCancel-appointment', {
+                      method: 'POST',
+                      headers: {
+                        'Content-Type': 'application/json',
+                      },
+                      body: JSON.stringify({ appointmentId }),
+                    });
+
+                    if (response.ok) {
+                      // Refresh the page after successful cancellation
+                      location.reload();
+                    } else {
+                      console.error('Appointment approving failed:', response);
+                    }
+                  } catch (error) {
+                    console.log(error);
+                  }
+                  }
+              });
+              return false;
+            });
+          });
 
           approveButtons.forEach((button) => {
             button.addEventListener('click', async () => {
