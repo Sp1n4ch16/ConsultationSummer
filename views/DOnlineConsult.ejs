@@ -95,8 +95,15 @@
           approveButtons.forEach((button) => {
             button.addEventListener('click', async () => {
               const appointmentId = button.closest('tr').querySelector('td:first-child').textContent;
-
-              try {
+              swal({
+                  title: "Are you sure you want to approved this appointment?",
+                  icon: "warning",
+                  buttons: true,
+                  dangerMode: true,
+              })
+              .then(async function (isOkay) {
+                if (isOkay) {
+                  try {
                 const response = await fetch('/approve-appointment', {
                   method: 'POST',
                   headers: {
@@ -114,6 +121,9 @@
               } catch (error) {
                 console.log(error);
               }
+              }
+              })
+              return false;
             });
           });
 
