@@ -89,10 +89,11 @@ const peerServer = ExpressPeerServer(http, {
 const users = {};
 
 io.on("connection", socket => {
-  socket.on("join-room", (roomId, userId, name) => {
+  socket.on("join-room", (roomId, userId, name, email) => {
     users[socket.id] = name;
     socket.broadcast.emit("user-connected", userId);
     socket.broadcast.emit("join-name", name);
+    socket.broadcast.emit("join-email", email);
 
     socket.on("disconnect", () => {
       socket.broadcast.emit("user-disconnected", userId);

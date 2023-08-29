@@ -163,7 +163,7 @@
       });
 
       myPeer.on("open", id => {
-        socket.emit("join-room", ROOM_ID, id, name);
+        socket.emit("join-room", ROOM_ID, id, name, email);
       });
 
       socket.on("chat-message", data => {

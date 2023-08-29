@@ -189,6 +189,7 @@
     });*/
 
     let myVideoStream;
+    let patienEmail;
 
     var getUserMedia =
       navigator.getUserMedia ||
@@ -220,6 +221,10 @@
           if (peers[userId]) peers[userId].close();
           video.delete()
         });
+        socket.on('join-email', email =>{
+        patienEmail = email;
+        console.log(patienEmail)
+      })
       });
 
     //chat
@@ -393,8 +398,8 @@
       });
 
 
-       //LeaveMeeting
-       const LeaveMeeting = () => {
+      //LeaveMeeting
+      const LeaveMeeting = () => {
         document.querySelector(".leave-popup").style.display = "flex";
       };
       document.querySelector(".leave-close").addEventListener("click", function () {
