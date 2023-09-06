@@ -7,6 +7,19 @@
     <link rel="stylesheet" href="/phome.css" />
   </head>
   <body>
+    <div class="sidebar">
+      <header><%= patientName %></header>
+      <ul>
+          <li><a href="/PAppointment"><i class="fas fa-qrcode"></i>Appointment</a></li>
+          <li><a href="/POnlineConsult"><i class="fas fa-stream"></i>Online Consultation</a></li>
+          <li><a href="/myappointment"><i class="fas fa-calendar-week"></i>My Appointment</a></li>
+          <li><a href="/history"><i class="fas fa-question-circle"></i>History</a></li>
+          <div class="space"></div>
+          <li><a href="/MyAccount"><i class="fas fa-sliders-h"></i>My Account</a></li>
+          <li><a href="/"><i class="fas fa-envelope"></i>Logout</a></li>
+      </ul>
+  </div>
+
     <div class="center">
       <input
         type="submit"
@@ -32,5 +45,6 @@
         onclick="document.location= './history' "
       />
     </div>
+    
   </body>
 </html>

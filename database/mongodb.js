@@ -78,7 +78,13 @@ const appointmentSchema = new mongoose.Schema(
       type: String,
     },
     date: {
-      type: Date,
+      type: String,
+    },
+    time:{
+      type: String,
+    },
+    datetime:{
+      type:Date
     },
     description: {
       type: String,
@@ -119,7 +125,13 @@ const onlineconsultationSchema = new mongoose.Schema(
       type: String,
     },
     date: {
-      type: Date,
+      type: String,
+    },
+    time:{
+      type: String,
+    },
+    datetime:{
+      type:Date
     },
     age: {
       type: String,

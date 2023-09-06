@@ -13,8 +13,22 @@
   </head>
 
   <body>
+    <div class="sidebar">
+      <header><%= patientName %></header>
+      <ul>
+          <li><a href="/Phome"><i class="fas fa-qrcode"></i>Dashboard</a></li>
+          <li><a href="/POnlineConsult"><i class="fas fa-qrcode"></i>Online Consultation</a></li>
+          <li><a href="/myappointment"><i class="fas fa-calendar-week"></i>My Appointment</a></li>
+          <li><a href="/history"><i class="fas fa-question-circle"></i>History</a></li>
+          <div class="space"></div>
+          <li><a href="/MyAccount"><i class="fas fa-sliders-h"></i>My Account</a></li>
+          <li><a href="/"><i class="fas fa-envelope"></i>Logout</a></li>
+      </ul>
+  </div>
+
     <div class="center">
-      <form action="/PAppointment" method="post" enctype="multipart/form-data">
+      <input type="text" name="antiSpam" class="hidden">
+      <form action="/PAppointment" method="post" enctype="multipart/form-data" id="myForm">
         <h1>Appointment</h1>
         <div class="image">
           <img src="./dentist.png" alt="Error" />
@@ -24,6 +38,28 @@
         <div class="txt_field">
           <input id="datetime" name="date" required />
           <label>Date</label>
+        </div>
+        <div class="time">
+          <div class="time-schedule">
+            <input type="radio" name="time" id="time" value="8am">
+            <label for="1st">8am - 9am</label>
+          </div>
+          <div class="time-schedule">
+            <input type="radio" name="time" id="time" value="10am">
+            <label for="2nd">10am - 11am</label >
+          </div>
+          <div class="time-schedule">
+            <input type="radio" name="time" id="time" value="12pm">
+            <label for="3rd">12pm - 1pm</label >
+          </div>
+          <div class="time-schedule">
+            <input type="radio" name="time" id="time" value="2pm">
+          <label for="4th">2pm - 3pm</label >
+          </div>
+          <div class="time-schedule">
+            <input type="radio" name="time" id="time" value="4pm">
+            <label for="5th">4pm - 5pm</label >
+          </div>
         </div>
         <div class="txt_field">
           <input type="text" name="description" required />
@@ -50,20 +86,25 @@
             </option></select
           >.
         </div>
-        <input type="submit" value="Submit" />
+        <input type="submit" value="Submit" onclick="spam()"/>
       </form>
     </div>
 
     <script>
       flatpickr("#datetime", {
-        enableTime: true,
-        dateFormat: "Y-m-d H:i",
+        dateFormat: "Y-m-d",
         minDate: "today",
         maxDate: new Date().fp_incr(14), // 14 days from now
-        time_24hr: true,
         //minTime: "08:00",
         //maxTime: "17:00",
       });
+
+      document
+        .getElementById("myForm")
+        .addEventListener("submit", function (event) {
+          alert('Appointment successfully')
+      })
+
     </script>
   </body>
 </html>

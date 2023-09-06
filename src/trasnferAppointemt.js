@@ -15,8 +15,8 @@ const transferAppointmentsToHistory = async (req, res, next) => {
     const oneHourAgo = new Date(currentTime.getTime() - 60 * 60 * 1000);
 
     // Find appointments where the date is 1 hour earlier than the current time
-    const appointments = await Appointment.find({ date: { $lt: oneHourAgo } });
-    const consult = await OnlineConsult.find({ date: { $lt: oneHourAgo } });
+    const appointments = await Appointment.find({ datetime: { $lt: oneHourAgo } });
+    const consult = await OnlineConsult.find({ datetime: { $lt: oneHourAgo } });
 
     // Transfer appointments to history collection
     await appointmentDone.insertMany(appointments);

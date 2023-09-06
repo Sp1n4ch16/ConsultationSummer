@@ -109,7 +109,7 @@
     <div class="prescription-popup-content">
       <img src="./close.jpg" alt="Close" class="prescription-close" />
       <input type="file" id="image" name="image" />
-      <input type="text" name="email" placeholder="Email">
+      <input type="text" name="email" placeholder="Email" id="patient">
       <input type="submit">
     </div>
   </div>
@@ -189,7 +189,8 @@
     });*/
 
     let myVideoStream;
-    let patienEmail;
+    let patientEmail;
+    const emailtPatient = document.getElementById('patient')
 
     var getUserMedia =
       navigator.getUserMedia ||
@@ -221,10 +222,6 @@
           if (peers[userId]) peers[userId].close();
           video.delete()
         });
-        socket.on('join-email', email =>{
-        patienEmail = email;
-        console.log(patienEmail)
-      })
       });
 
     //chat
@@ -257,6 +254,10 @@
       all_messages.append(li);
       main__chat__window.scrollTop = main__chat__window.scrollHeight;
     })
+    socket.on('join-email', email =>{
+        patientEmail = email;
+        console.log('patient email ' + patientEmail)
+      })
 
     document.addEventListener("keydown", (e) => {
       if (e.which === 13 && chatInputBox.value != "") {
@@ -385,6 +386,7 @@
       //Prescription
       const Prescription = () => {
         document.querySelector(".prescription-popup").style.display = "flex";
+        document.querySelector("#patient").value = patientEmail;
       };
       document.querySelector(".prescription-close").addEventListener("click", function () {
         document.querySelector(".prescription-popup").style.display = "none";

@@ -2,6 +2,8 @@ const { OnlineConsult, Appointment } = require("../database/mongodb");
 const moment = require("moment");
 
 const myappointmentAPI = async (req, res, next) => {
+  const patientName = req.cookies.name;
+
   try {
     const appointment = await Appointment.find({
       email: req.cookies.emailUser,
@@ -17,7 +19,7 @@ const myappointmentAPI = async (req, res, next) => {
     // Modify the appointmentList array to include the enabled property
     const appointmentList = appointment.map(appointment => {
       const currentTime = new Date();
-      const appointmentDate = appointment.date;
+      const appointmentDate = appointment.datetime;
       const oneHourAhead = new Date(appointmentDate.getTime() + 60 * 60 * 1000); // Add 1 hour to the appointment date
       const enabled =
         currentTime > appointmentDate && currentTime < oneHourAhead; // Determine if the button should be enabled
@@ -34,7 +36,7 @@ const myappointmentAPI = async (req, res, next) => {
 
     const onlineConsultList = onlineConsult.map(onlineConsult => {
       const currentTime = new Date();
-      const onlineConsultDate = onlineConsult.date;
+      const onlineConsultDate = onlineConsult.datetime;
       const oneHourAhead = new Date(
         onlineConsultDate.getTime() + 60 * 60 * 1000
       );
@@ -59,6 +61,7 @@ const myappointmentAPI = async (req, res, next) => {
       age,
       fullname,
       gender,
+      patientName,
     });
   } catch (error) {
     res.status(500).json({ message: error.message });

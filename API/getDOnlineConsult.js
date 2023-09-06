@@ -7,7 +7,7 @@ const DOnlineConsultAPI = async (req, res) => {
     
         const onlineConsultList = onlineConsult.map(onlineConsult => {
           const currentTime = new Date();
-          const onlineConsultDate = onlineConsult.date;
+          const onlineConsultDate = onlineConsult.datetime;
           const oneHourAhead = new Date(
             onlineConsultDate.getTime() + 60 * 60 * 1000
           ); // Add 1 hour to the appointment date

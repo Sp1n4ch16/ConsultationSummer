@@ -1,7 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+}
+.sidebar {
+    position: fixed;
+    left: 0;
+    width: 250px;
+    height: 100%;
+    background: #042331;
+}
+.sidebar header{
+    font-size: 22px;
+    color: white;
+    text-align: center;
+    line-height: 70px;
+    background: #063146;
+    user-select: none;
+    margin-bottom: 150px;
+}
+.sidebar ul a {
+    display: block;
+    height: auto;
+    width: auto;
+    line-height: 65px;
+    font-size: 20px;
+    color: white;
+    padding-left: 40px;
+    box-sizing: border-box;
+    border-top: 1px solid rgba(255, 255, 255, .1);
+    border-bottom: 1px solid black;
+    transition: .4s;
+}
+ul li:hover a {
+  padding-left: 50px;
+}
+.sidebar ul a i{
+  margin-right: 16px;
+}
+.space{
+  margin: 340px 0;
+}
+
 body {
-  margin: 0;
-  padding: 0;
-  font-family: montserrat;
   background: url(./background.jpg);
 }
 .center {

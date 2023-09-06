@@ -18,7 +18,7 @@ const registerAPI = async (req, res) => {
       full_name: req.body.firstName + " " + req.body.lastName,
       contact_number: userPhone,
       address: req.body.address,
-      birthdate: new Date(req.body.birthdate),
+      birthdate: new Date(userBirthdate),
       age: userAge,
       gender: req.body.gender,
       email: req.body.email,

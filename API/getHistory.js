@@ -2,6 +2,9 @@ const { appointmentDone,consultDone} = require ('../database/mongodb')
 const moment = require('moment')
 
 const historyAPI = async (req, res) => {
+    const patientName = req.cookies.name;
+
+
     const appointmentHistory = await appointmentDone.find({
         email: req.cookies.emailUser,
       });
@@ -29,7 +32,7 @@ const historyAPI = async (req, res) => {
         };
       });
     
-      res.render("history", { historyList, consultHistoryList });
+      res.render("history", { historyList, consultHistoryList,patientName });
 }
 
 module.exports = historyAPI

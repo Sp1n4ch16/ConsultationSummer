@@ -49,6 +49,7 @@ const PAppointmentAPI = require('./API/postPAppointment')
 const DAppointmentAPI = require('./API/getDAppointment')
 const DOnlineConsultAPI = require('./API/getDOnlineConsult')
 const DHisotryAPI = require('./API/getDHistory')
+const myAccountAPI = require('./API/postMyAccount')
 
 const {
   Register,
@@ -116,6 +117,8 @@ paypal.configure({
     "EFI2B7zQ5HDBO_nNEe3hjwGeytc7LtGXNpzrpxCATSj93Gw5jDKvIhyMRshsXltx4LYC2Q5hndU8s3L_",
 });
 
+let patientName;
+
 
 app.get("/", (req, res) => {
   res.render("login");
@@ -139,7 +142,8 @@ app.get("/register", (req, res) => {
 });
 
 app.get("/PHome", (req, res) => {
-  res.render("PHome");
+  patientName = req.cookies.name
+  res.render("PHome", {patientName});
 });
 
 app.get("/bookFailed", (req, res) => {
@@ -152,10 +156,26 @@ app.get("/bookFailedAppointment", (req, res) => {
 
 app.get("/POnlineConsult", onlineConsultAPI, (req, res) => {});
 
+app.get("/MyAccount",async (req, res) => {
+  const email = req.cookies.emailUser
+  const user = await Register.findOne({email:email})
+  const userList = Object.values(user);
+  if(user){
+    res.render('MyAccount',{userList})
+  }else {
+    res.send('Canoot get the email')
+  }
+});
+
+app.post("/MyAccount",myAccountAPI,(req, res) => {
+
+})
+
 app.get("/myappointment", transferAppointmentsToHistory, myappointmentAPI);
 
 app.get("/PAppointment", (req, res) => {
-  res.render("PAppointment");
+  patientName = req.cookies.name;
+  res.render("PAppointment",{patientName});
 });
 
 app.get("/room", (req, res) => {

@@ -7,7 +7,7 @@ const DAppointmentAPI = async (req, res) => {
     
         const appointmentList = appointment.map(appointment => {
           const currentTime = new Date();
-          const appointmentDate = appointment.date;
+          const appointmentDate = appointment.datetime;
           const oneHourAhead = new Date(appointmentDate.getTime() + 60 * 60 * 1000); // Add 1 hour to the appointment date
           const enabled =
             currentTime > appointmentDate && currentTime < oneHourAhead; // Determine if the button should be enabled

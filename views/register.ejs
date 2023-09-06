@@ -60,8 +60,8 @@
 
     <script>
       var letters = /^[a-zA-z]*$/;
-      const firstName = document.getElementById('fname').value;
-      const lastName = document.getElementById('lname').value
+      const firstName = document.getElementById('fname');
+      const lastName = document.getElementById('lname');
 
         flatpickr("#datetime", {
         dateFormat: "Y-m-d",
@@ -84,16 +84,16 @@
             });
             event.preventDefault();
           } 
-          else if (firstName.match(letters)) {
-            alert('first name must containt alphabets only')
+          else if (!firstName.value.match(letters)) {
+            alert(`${firstName.value} is not a valid first name`)
             event.preventDefault();
           }
-          else if (lastName.match(letters)){
-            alert('Last name must contain alpabhets only')
+          else if (!lastName.value.match(letters)){
+            alert(`${lastName.value} is not a valid last name`)
             event.preventDefault();
           }
           else {
-            alert("You're now registered!");
+            alert("Register Successfully");
           }
         });
     </script>

@@ -94,7 +94,6 @@
 
           approveButtons.forEach((button) => {
             button.addEventListener('click', async () => {
-              const appointmentId = button.closest('tr').querySelector('td:first-child').textContent;
               swal({
                   title: "Are you sure you want to approved this appointment?",
                   icon: "warning",
@@ -102,6 +101,7 @@
                   dangerMode: true,
               })
               .then(async function (isOkay) {
+                const appointmentId = button.closest('tr').querySelector('td:first-child').textContent;
                 if (isOkay) {
                   try {
                 const response = await fetch('/approve-appointment', {

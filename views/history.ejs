@@ -7,6 +7,19 @@
   <link rel="stylesheet" href="/myappointment.css" />
 </head>
 <body>
+  <div class="sidebar">
+    <header><%= patientName %></header>
+    <ul>
+        <li><a href="Phome"><i class="fas fa-qrcode"></i>Dashboard</a></li>
+        <li><a href="/PAppointment"><i class="fas fa-qrcode"></i>Appointment</a></li>
+        <li><a href="/POnlineConsult"><i class="fas fa-stream"></i>Online Consultation</a></li>
+        <li><a href="/myappointment"><i class="fas fa-calendar-week"></i>My Appointment</a></li>
+        <div class="space"></div>
+        <li><a href="/MyAccount"><i class="fas fa-sliders-h"></i>My Account</a></li>
+        <li><a href="/"><i class="fas fa-envelope"></i>Logout</a></li>
+    </ul>
+  </div>
+  
       <main class="table">
         <section class="table_header">
           <h1>Appointment</h1>

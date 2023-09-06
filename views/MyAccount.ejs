@@ -1,0 +1,105 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=, initial-scale=1.0" />
+    <title>Register</title>
+    <link rel="stylesheet" href="/MyAccount.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
+    />
+    <script>
+      user = '<%= userList %>'
+    </script>'
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  </head>
+  <body>
+    <% userList.forEach(userInfo => { %>
+    <div class="center">
+      <form action="/MyAccount" method="post" id="myForm">
+        <h1><%= userInfo.full_name %></h1>
+        <div class="txt_field">
+          <input type="text" name="firstName" id="fname" value="<%= userInfo.first_name %>" required />
+          <label>First Name</label>
+        </div>
+        <div class="txt_field">
+          <input type="text" name="lastName" id="lname" value="<%= userInfo.last_name %>" required />
+          <label>Last Name</label>
+        </div>
+        <div class="txt_field">
+          <input type="text" name="contactNumber" value="<%= userInfo.contact_number %>" required>
+          <label>Contact Number</label>
+        </div>
+        <div class="txt_field">
+          <input type="text" name="address" value="<%= userInfo.address %>" required />
+          <label>Address</label>
+        </div>
+        <div class="txt_field">
+          <input id="datetime" name="birthdate" value="<%= userInfo.birthdate %>" required />
+          <label>Birthdate</label>
+        </div>
+
+        <label>Gender</label> <br />
+        <input type="radio" id="male" name="gender" value="Male" required/>
+        <label for="male">Male</label>
+        <input type="radio" id="female" name="gender" value="Female" required/>
+        <label for="female">Female</label>
+
+        <div class="txt_field">
+          <input type="password" name="password" required id="pass" />
+          <label>Password</label>
+        </div>
+        <div class="txt_field">
+          <input type="password" name="confirm_password" required id="cpass" />
+          <label>Confirm Password</label>
+        </div>
+        <input type="submit" value="Save" onclick="submitButton()" />
+        <button onclick="document.location= './PHome' ">Cancel</button>
+      </form>
+      <% }) %>
+    </div>
+
+    <script>
+      var letters = /^[a-zA-z]*$/;
+      const firstName = document.getElementById('fname');
+      const lastName = document.getElementById('lname');
+      const passInput = document.getElementById('pass');
+      const cpassInput = document.getElementById('cpass');
+
+      flatpickr("#datetime", {
+        dateFormat: "Y-m-d",
+        maxDate: new Date(), // 14 days from now
+        
+      });
+      document
+        .getElementById("myForm")
+        .addEventListener("submit", function (event) {
+          const pass = document.getElementById("pass").value;
+          const cpass = document.getElementById("cpass").value;
+
+          if (pass !== cpass) {
+            alert("Password and Confirm password didn't match");
+            var textInputs = document.querySelectorAll(
+              'input[type="password"]'
+            );
+            textInputs.forEach(function (input) {
+              input.value = "";
+            });
+            event.preventDefault();
+          } 
+          else if (!firstName.value.match(letters)) {
+            alert(`${firstName.value} is not a valid first name`)
+            event.preventDefault();
+          }
+          else if (!lastName.value.match(letters)){
+            alert(`${lastName.value} is not a valid last name`)
+            event.preventDefault();
+          }
+          else {
+            alert("Register Successfully");
+          }
+        });
+    </script>
+  </body>
+</html>
