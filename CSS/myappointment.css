@@ -56,7 +56,7 @@ body {
 }
 main.table {
   width: auto;
-  height: 100%;
+  height: auto;
   background-color: #fff5;
   position: absolute;
   top: 50%;
@@ -66,7 +66,6 @@ main.table {
   /*backdrop-filter: blur(7px);*/
   box-shadow: 0 0.4rem 0.8rem #0005;
   border-radius: 0.8rem;
-  height: 100%;
 }
 .table_header {
   width: 100%;
@@ -82,7 +81,8 @@ main.table {
   margin: 0.8rem auto;
   border-radius: 0.6rem;
 
-  overflow: auto;
+  overflow: scroll;
+ 
 }
 .table_body::-webkit-scrollbar {
   width: 0.5rem;

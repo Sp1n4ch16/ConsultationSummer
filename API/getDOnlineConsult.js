@@ -23,8 +23,8 @@ const DOnlineConsultAPI = async (req, res) => {
             formattedDate,
           };
         });
-    
-        res.render("DOnlineConsult", { onlineConsultList });
+        const fullname = req.cookies.name
+        res.render("DOnlineConsult", { fullname,onlineConsultList });
       } catch (error) {
         res.status(500).json({ message: error.message });
         console.log(error);

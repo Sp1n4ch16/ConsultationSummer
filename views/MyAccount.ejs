@@ -64,10 +64,8 @@
       var letters = /^[a-zA-z]*$/;
       const firstName = document.getElementById('fname');
       const lastName = document.getElementById('lname');
-      const passInput = document.getElementById('pass');
-      const cpassInput = document.getElementById('cpass');
 
-      flatpickr("#datetime", {
+        flatpickr("#datetime", {
         dateFormat: "Y-m-d",
         maxDate: new Date(), // 14 days from now
         
@@ -95,9 +93,6 @@
           else if (!lastName.value.match(letters)){
             alert(`${lastName.value} is not a valid last name`)
             event.preventDefault();
-          }
-          else {
-            alert("Register Successfully");
           }
         });
     </script>

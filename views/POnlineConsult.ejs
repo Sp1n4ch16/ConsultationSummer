@@ -34,9 +34,9 @@
         <div class="image">
           <img src="/dentist.png" alt="Error" />
         </div>
-        <% doctors.forEach((doctor) => { %>
-        <div class="doctor"><%= doctor.fullName %></div>
-        <div class="doctor">₱<%= doctor.consultation_fee %></div>
+        <% doc.forEach((doctor) => { %>
+        <div class="doctor"><%= doctor.full_name %></div>
+        <div class="doctor">₱<%= doctor.fee %></div>
         <% }) %>
         <div class="txt_field">
           <input id="datetime" name="date" class="date" id="date" required />

@@ -15,6 +15,11 @@
     <div class="center">
       <form action="/register" method="post" id="myForm">
         <h1>Register</h1>
+        <% if(errors.length >0) {%>
+          <div class="alert-failed">
+            <%= errors %>
+          </div>
+        <% } %>
         <div class="txt_field">
           <input type="text" name="firstName" id="fname" required />
           <label>First Name</label>
@@ -32,8 +37,7 @@
           <label>Address</label>
         </div>
         <div class="txt_field">
-          <input id="datetime" name="birthdate" required />
-          <label>Birthdate</label>
+          <input id="datetime" name="birthdate" placeholder="Birthdate" required />
         </div>
 
         <label>Gender</label> <br />
@@ -91,9 +95,6 @@
           else if (!lastName.value.match(letters)){
             alert(`${lastName.value} is not a valid last name`)
             event.preventDefault();
-          }
-          else {
-            alert("Register Successfully");
           }
         });
     </script>

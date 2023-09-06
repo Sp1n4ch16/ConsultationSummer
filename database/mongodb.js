@@ -69,6 +69,66 @@ const registerSchema = new mongoose.Schema(
   }
 );
 
+const doctorSchema = new mongoose.Schema(
+  {
+    first_name: {
+      type: String,
+      required: [true, "Please enter first name"],
+    },
+    last_name: {
+      type: String,
+      required: [true, "Please enter last name"],
+    },
+    full_name: {
+      type: String,
+    },
+    contact_number: {
+      type: String,
+      required: [true, "Please enter last name"],
+    },
+    address: {
+      type: String,
+      required: [true, "Please enter last name"],
+    },
+    birthdate: {
+      type: Date,
+    },
+    age: {
+      type: String,
+    },
+    gender: {
+      type: String,
+    },
+    email: {
+      type: String,
+      required: [true, "Please enter email"],
+    },
+    password: {
+      type: String,
+      required: [true, "Please enter password"],
+    },
+    isVerified: {
+      type: Boolean,
+    },
+    emailToken: {
+      type: String,
+    },
+    userRole: {
+      type: String,
+    },
+    date: {
+      type: Date,
+      default: Date.now(),
+    },
+    fee:{
+      type: String,
+    }
+  },
+  {
+    timestamps: true,
+  }
+);
+
 const appointmentSchema = new mongoose.Schema(
   {
     name: {
@@ -163,28 +223,6 @@ const onlineconsultationSchema = new mongoose.Schema(
   }
 );
 
-const doctorSchema = new mongoose.Schema(
-  {
-    name: {
-      type: String,
-      required: [true, "Please enter name"],
-    },
-    email: {
-      type: String,
-      required: [true, "Please enter email"],
-    },
-    password: {
-      type: String,
-      required: [true, "Please enter password"],
-    },
-    isVerified: {
-      type: Boolean,
-    },
-  },
-  {
-    timestamps: true,
-  }
-);
 
 const appointmentDoneschema = new mongoose.Schema(
   {
@@ -252,55 +290,14 @@ const onlineConsultDoneschema = new mongoose.Schema(
     timestamps: true,
   }
 );
-const doctorInfoSchema = new mongoose.Schema(
-  {
-    fullName: {
-      type: String,
-    },
-    date: {
-      type: Date,
-      default: Date.now(),
-    },
-    consultation_fee: {
-      type: String,
-    },
-  },
-  {
-    timestamps: true,
-  }
-);
-const recordingSchema = new mongoose.Schema({
-  appointmentId: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-  },
-  recordingPath: {
-    type: String,
-    required: true,
-  },
-  recordingMimetype: {
-    type: String,
-    required: true,
-  },
-});
 
-const doctorInfo =  mongoose.model("Doctor Information", doctorInfoSchema);
 const Appointment =  mongoose.model("Appointment", appointmentSchema);
 const Register = mongoose.model("Register", registerSchema);
-const ScreenRecord =  mongoose.model("Screen Record", recordingSchema);
-const appointmentDone =  mongoose.model(
-  "Appointment-History",
-  appointmentDoneschema
-);
-const consultDone =  mongoose.model(
-  "Online Consultation-History",
-  onlineConsultDoneschema
-);
-const OnlineConsult =  mongoose.model(
-  "Online Consultation",
-  onlineconsultationSchema
-);
+const appointmentDone =  mongoose.model("Appointment-History",appointmentDoneschema);
+const consultDone =  mongoose.model("Online Consultation-History",onlineConsultDoneschema);
+const OnlineConsult =  mongoose.model("Online Consultation",onlineconsultationSchema);
 const Doctor = mongoose.model("Doctor", doctorSchema);
+
 module.exports = {
   Appointment,
   Register,
@@ -308,6 +305,4 @@ module.exports = {
   Doctor,
   appointmentDone,
   consultDone,
-  doctorInfo,
-  ScreenRecord,
 };

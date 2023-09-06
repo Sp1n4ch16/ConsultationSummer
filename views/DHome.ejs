@@ -9,21 +9,17 @@
   </head>
   <body>
     <div class="sidebar">
-      <header><%=  %></header>
+      <header><%= fullname %></header>
       <ul>
           <li><a href="/DAppointment"><i class="fas fa-qrcode"></i>Appointment</a></li>
           <li><a href="/DOnlineConsult"><i class="fas fa-stream"></i>Online Consultation</a></li>
           <li><a href="/DHistory"><i class="fas fa-calendar-week"></i>History</a></li>
           <li><a href="/DoctorInfo"><i class="fas fa-question-circle"></i>Doctor Information</a></li>
           <div class="space"></div>
-          <li><a href="#"><i class="fas fa-sliders-h"></i>My Account</a></li>
           <li><a href="/"><i class="fas fa-envelope"></i>Logout</a></li>
       </ul>
   </div>
 
-    <% doctors.forEach((doctor) => { %>
-    <h3>Welcome <%= doctor.fullName %></h3>
-    <% }) %>
     <div class="center">
       <input
         type="submit"

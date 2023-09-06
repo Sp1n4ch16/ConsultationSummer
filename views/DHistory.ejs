@@ -7,6 +7,18 @@
   <link rel="stylesheet" href="/DHistory.css" />
 </head>
 <body>
+  <div class="sidebar">
+    <header><%= fullname %></header>
+    <ul>
+      <li><a href="/DHome"><i class="fas fa-qrcode"></i>Home</a></li>
+        <li><a href="/DAppointment"><i class="fas fa-qrcode"></i>Appointment</a></li>
+        <li><a href="/DOnlineConsult"><i class="fas fa-stream"></i>Online Consultation</a></li>
+        <li><a href="/DoctorInfo"><i class="fas fa-question-circle"></i>Doctor Information</a></li>
+        <div class="space"></div>
+        <li><a href="/"><i class="fas fa-envelope"></i>Logout</a></li>
+    </ul>
+  </div>
+
       <main class="table">
         <section class="table_header">
           <h1>Appointment</h1>
@@ -16,11 +28,10 @@
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Name</th>
+                <th>Email</th>
                 <th>Age</th>
-                <th>Gender</th>
-                <th>Services</th>
                 <th>Description</th>
+                <th>Services</th>
                 <th>Date</th>
                 <th>Status</th>
               </tr>
@@ -28,50 +39,51 @@
             <tbody>
               <% historyList.forEach(history => { %>
               <tr>
-                <td><%= history.id %></td>
+                <td><%= history._id %></td>
+                <td><%= history.email %></td>
+                <td><%= history.age %></td>
                 <td><%= history.description %></td>
+                <td><%= history.services %></td>
                 <td><%= history.formattedDate %></td>
-                <td></td>
+                <td><%= history.status %></td>
               </tr>
               <% }) %>
             </tbody>
           </table>
-          <section class="table_header">
-            <h1>Online Consultation</h1>
-          </section>
-          <section class="table_body">
-            <table>
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>Age</th>
-                  <th>Gender</th>
-                  <th>Description</th>
-                  <th>Date</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <% consultHistoryList.forEach(consultHistory => { %>
-                <tr>
-                  <td><%= consultHistory._id %></td>
-                  <td><%= consultHistory.name %></td>
-                  <td><%= consultHistory.age %></td>
-                  <td><%= consultHistory.gender %></td>
-                  <td><%= consultHistory.description %></td>
-                  <td><%= consultHistory.date %></td>
-                  <td><%= consultHistory.status %></td>
-                </tr>
-                <% }) %>
-              </tbody>
-            </table>
+        </section>
+        <section class="table_header">
+          <h1>Online Consultation Appointment</h1>
+        </section>
+        <section class="table_body">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Email</th>
+                <th>Age</th>
+                <th>Description</th>
+                <th>Date</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% consultHistoryList.forEach(consultHistory => { %>
+              <tr>
+                <td><%= consultHistory._id %></td>
+                <td><%= consultHistory.email %></td>
+                <td><%= consultHistory.age %></td>
+                <td><%= consultHistory.description %></td>
+                <td><%= consultHistory.formattedDate %></td>
+                <td><%= consultHistory.status %></td>
+              </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </section>
       </main>
 
 
   <script>
-    
-
   </script>
 </body>
 </html>

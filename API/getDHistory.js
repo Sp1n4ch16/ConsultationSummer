@@ -23,8 +23,8 @@ const DHistoryAPI = async (req, res) => {
         formattedDate,
       };
     });
-  
-    res.render("DHistory", { historyList, consultHistoryList });
+    const fullname = req.cookies.name
+    res.render("DHistory", { fullname,historyList, consultHistoryList });
 }
 
 module.exports = DHistoryAPI

@@ -21,8 +21,8 @@ const DAppointmentAPI = async (req, res) => {
             formattedDate,
           };
         });
-    
-        res.render("DAppointment", { appointmentList });
+        const fullname = req.cookies.name
+        res.render("DAppointment", { fullname,appointmentList });
       } catch (error) {
         res.status(500).json({ message: error.message });
         console.log(error);

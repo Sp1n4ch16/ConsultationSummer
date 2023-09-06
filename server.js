@@ -19,6 +19,12 @@ var cron = require('node-cron');
 const fs = require('fs')
 const multer = require('multer')
 
+const flash = require('express-flash')
+const bodyParser = require('body-parser')
+app.use(bodyParser.urlencoded({extended:false}))
+app.use(bodyParser.json())
+app.use(flash())
+
 const accountSid = 'AC67744b6b3dd1ed03a116bd71cffafe0e';
 const authToken = 'adef90ea2422b2814b4ebbe9a791351e';
 const client = require('twilio')(accountSid, authToken);
@@ -58,8 +64,6 @@ const {
   Doctor,
   appointmentDone,
   consultDone,
-  doctorInfo,
-  ScreenRecord,
 } = require("./database/mongodb");
 
 app.set("view engine", "ejs");
@@ -74,7 +78,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(
   session({
-    secret: "secret",
+    secret: "secret key",
     cookie: { maxAge: 60000 },
     saveUninitialized: false,
     resave: false,
@@ -138,8 +142,10 @@ app.get("/login/verify-email", loginVerify, async (req, res) => {
 });
 
 app.get("/register", (req, res) => {
-  res.render("register");
-});
+  const errors = req.flash().error || [];
+  console.log(req.flash())
+  res.render("register",{errors});
+}); 
 
 app.get("/PHome", (req, res) => {
   patientName = req.cookies.name
@@ -272,8 +278,8 @@ var fee;
 
 app.post('/pay', async (req, res) => {
   consult = req.body.appointmentId; // Declare consult using 'const'
-  const doctor = await doctorInfo.findOne({}); // Use findOne instead of find
-  fee = doctor.consultation_fee;
+  const doctor = await Doctor.findOne({}); // Use findOne instead of find
+  fee = doctor.fee;
 
   const create_payment_json = {
     "intent": "sale",
@@ -414,30 +420,82 @@ app.post("/prescription",uploadprescription.single("image"), (req, res) => {
   });
 });
 
-app.get("/DoctorInfo", (req, res) => {
-  res.render("DoctorInfo");
+app.get("/DoctorInfo", async (req, res) => {
+  const email = req.cookies.emailUser
+  const doc = await Doctor.findOne({email:email})
+  const docInfo = Object.values(doc)
+  res.render("DoctorInfo",{fullname:req.cookies.name , docInfo});
 });
 
-app.post("/DoctorInfo", async (req, res) => {
-  const fullName = req.body.doctorName;
-  const date = req.body.date;
-  const consultation_fee = req.body.consultationFee+".00";
+const formatContactNumber = require ("./src/changeContactFormat");
+const { YesterdayInstance } = require("twilio/lib/rest/api/v2010/account/usage/record/yesterday");
+app.post('/docRegister', async (req, res) => {
+    try {
+      const userBirthdate = req.body.birthdate;
+      const userAge = calculateAge(userBirthdate);
+      const userContact = req.body.contactNumber;
+      const userPhone = formatContactNumber(userContact)
+      console.log(userPhone)
+      const data = {
+        first_name: req.body.firstName,
+        last_name: req.body.lastName,
+        full_name: req.body.firstName + " " + req.body.lastName,
+        contact_number: userPhone,
+        address: req.body.address,
+        birthdate: new Date(userBirthdate),
+        age: userAge,
+        gender: req.body.gender,
+        email: req.body.email,
+        password: req.body.password,
+        isVerified: true,
+        emailToken: null,
+        userRole: "1",
+      };
+      const salt = await bcrypt.genSalt(10);
+      const hashpassword = await bcrypt.hash(data.password, salt);
+      data.password = hashpassword;
+      await Doctor.insertMany([data]);
+      console.log('doc register')
+  
+  }catch(error){
+    console.log(error)
+  };
+})
 
-  doctorInfo
-    .findOneAndUpdate(
-      {},
-      { fullName, date, consultation_fee },
-      { upsert: true }
-    )
-    .then(() => {
-      console.log("Data updated successfully");
-      res.redirect("DHome");
-    })
-    .catch(error => {
-      console.log("Error updating data:", error);
-      res.status(500).send("Error updating data");
-    });
-});
+app.post('/docInfo', async (req, res) => {
+  try {
+    const user = await Doctor.findOne({email: req.cookies.emailUser})
+    const salt = await bcrypt.genSalt(10);
+    const consFee = req.body.fee
+    const totalFee = consFee + ".00"
+    if(user){
+        const userBirthdate = req.body.birthdate;
+        const userAge = calculateAge(userBirthdate);
+        user.first_name = req.body.firstName;
+        user.last_name = req.body.lastName;
+        user.full_name = req.body.firstName + " " + req.body.lastName;
+        user.contact_number = req.body.contactNumber;
+        user.address = req.body.address;
+        user.birthdate = new Date(userBirthdate);
+        user.age = userAge;
+        user.gender = req.body.gender;
+        user.fee = totalFee;
+        user.password = req.body.password;
+        const hashpassword = await bcrypt.hash(user.password, salt);
+        user.password = hashpassword;
+        await user.save()
+        console.log('Update Successfully')
+        const name = user.full_name
+        res.cookie("name", `Dr. ${name}`);
+        res.redirect('DHome')
+    }else{
+        res.send('No user or email was found!')
+    }
+    }
+    catch (err) {
+        console.log(err);
+      }
+})
 
 server.listen(3000, () => {
   console.log("Port running on 3000");

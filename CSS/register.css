@@ -92,3 +92,12 @@ input[type="submit"]:hover {
   border-color: hsl(157, 95%, 59%);
   transition: 0.5s;
 }
+
+.alert-failed{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #FC2947;
+  color: white;
+  height: 50px;
+}

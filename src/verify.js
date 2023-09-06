@@ -4,7 +4,9 @@ const verifyEmail = async (req, res, next) => {
   try {
     const user = await Register.findOne({ email: req.body.email });
     const userAdmin = await Doctor.findOne({ email: req.body.email });
-    if (user.isVerified) {
+    if (user && user.isVerified) {
+      next();
+    } else if(userAdmin && userAdmin.isVerified){
       next();
     } else {
       res.redirect("verify");
