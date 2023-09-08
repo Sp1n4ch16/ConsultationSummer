@@ -52,7 +52,7 @@
                 <td><%= onlineConsult.paid %></td>
                 <td><%= onlineConsult.status %></td>
                 <td>
-                  <button onclick="document.location= './Droom' "<%= onlineConsult.enabled ? '' : 'enabled' %>>Join</button>
+                  <button class="join-room" <%= onlineConsult.enabled ? '' : 'enabled' %>>Join</button>
                   <button class="approve-button">Approve</button>
                   <button class="cancel-button">Cancel</button>
                 </td>
@@ -66,6 +66,7 @@
         <script>
           const approveButtons = document.querySelectorAll('.approve-button');
           const cancelButtons = document.querySelectorAll('.cancel-button')
+          const joinButtons = document.querySelectorAll('.join-room')
 
           // Add a click event listener to each "Send" button
           cancelButtons.forEach((button) => {
@@ -137,6 +138,30 @@
               return false;
             });
           });
+
+          joinButtons.forEach((button) => {
+            button.addEventListener('click', async () => {
+              const appointmentId = button.closest('tr').querySelector('td:first-child').textContent;
+              try {
+                const response = await fetch('/patientEmail', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({ appointmentId }),
+                });
+                if (response.ok) {
+                  document.location= './Droom' 
+                } else {
+                  console.error('Appointment approving failed:', response);
+                }
+              } catch (error) {
+                console.log(error)
+              }
+
+            })
+          });
+          
 
         </script>
   </body>

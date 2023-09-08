@@ -22,6 +22,7 @@
     <script>
       const ROOM_ID = "<%= roomId %>";
       const name = "<%= name %>"
+      const patientEmail = "<%= emailOfPatient %>"
     </script>
   </head>
   <body>
@@ -189,7 +190,6 @@
     });*/
 
     let myVideoStream;
-    let patientEmail;
     const emailtPatient = document.getElementById('patient')
 
     var getUserMedia =

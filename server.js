@@ -287,8 +287,8 @@ app.post('/pay', async (req, res) => {
         "payment_method": "paypal"
     },
     "redirect_urls": {
-        "return_url": "https://consultationsummer.onrender.com/success",
-        "cancel_url": "https://consultationsummer.onrender.com/cancel"
+      "return_url": "https://consultationsummer.onrender.com/success",
+      "cancel_url": "https://consultationsummer.onrender.com/cancel"
     },
     "transactions": [{
         "item_list": {
@@ -376,10 +376,12 @@ app.get('/DHistory', DHisotryAPI, (req, res) => {})
 app.get("/Droom", (req, res) => {
   res.redirect(`/Droom${uuidv4()}`);
 });
+let patientEmail;
 app.get("/Droom:Droom", (req, res) => {
   res.render("Droom", {
     roomId: "Droom" + req.params.Droom,
     name: req.cookies.name,
+    emailOfPatient: patientEmail
   });
 });
 
@@ -495,6 +497,18 @@ app.post('/docInfo', async (req, res) => {
     catch (err) {
         console.log(err);
       }
+})
+
+app.post('/patientEmail', async (req, res) => {
+  const { appointmentId } = req.body;
+  const check = await OnlineConsult.findOne({_id:appointmentId})
+  if(check){
+    patientEmail = check.email
+    res.redirect('Droom')
+  }
+  else{
+    res.send('No appointmentID found')
+  }
 })
 
 server.listen(3000, () => {

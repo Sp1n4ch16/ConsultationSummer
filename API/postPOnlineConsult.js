@@ -59,7 +59,7 @@ function timeConverter(time) {
     const hour = timeMap[time];
 
     // Create a new Date object with the current date and the selected hour
-    const currentDate = new Date();
+    const currentDate = new Date()
     currentDate.setHours(hour, 0, 0, 0); // Set minutes, seconds, and milliseconds to 0
 
     // Format the time as HH:MM AM/PM
@@ -71,6 +71,17 @@ function timeConverter(time) {
     console.log('Invalid time selected');
     return null; // or throw an error, depending on your use case
   }
+}
+
+function utcTime(timeZone){
+  var aryIanaTimeZones = ['Asia/Shanghai'];
+  let date = new Date;
+  aryIanaTimeZones.forEach((timeZone) =>
+  {
+  let strTime = date.toLocaleString("en-US", {timeZone: `${timeZone}`});
+  console.log(timeZone, strTime);
+  return(strTime)
+  });
 }
 
 module.exports = postPOnlineConsultAPI;

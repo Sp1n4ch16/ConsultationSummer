@@ -26,9 +26,11 @@ const transferAppointmentsToHistory = async (req, res, next) => {
     await Appointment.deleteMany({
       _id: { $in: appointments.map(appointment => appointment._id) },
     });
+    console.log("transfer appointment to hisotry is completed")
     await OnlineConsult.deleteMany({
       _id: { $in: consult.map(OnlineConsult => OnlineConsult._id) },
     });
+    console.log("transfer online consultation to hisotry is completed")
     next();
   } catch (error) {
     console.error("Error transferring appointments to history:", error);
