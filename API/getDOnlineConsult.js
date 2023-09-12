@@ -4,9 +4,12 @@ const moment = require('moment')
 const DOnlineConsultAPI = async (req, res) => {
     try {
         const onlineConsult = await OnlineConsult.find({});
-    
         const onlineConsultList = onlineConsult.map(onlineConsult => {
-          const currentTime = new Date();
+
+          const philippinesTimeZoneOffset = 8 * 60; // UTC+8:00 in minutes
+          const currentDateInPhilippines = new Date(Date.now() + philippinesTimeZoneOffset * 60 * 1000);
+
+          const currentTime = currentDateInPhilippines;
           const onlineConsultDate = onlineConsult.datetime;
           const oneHourAhead = new Date(
             onlineConsultDate.getTime() + 60 * 60 * 1000

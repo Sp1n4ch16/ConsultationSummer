@@ -18,7 +18,11 @@ const myappointmentAPI = async (req, res, next) => {
 
     // Modify the appointmentList array to include the enabled property
     const appointmentList = appointment.map(appointment => {
-      const currentTime = new Date();
+
+      const philippinesTimeZoneOffset = 8 * 60; // UTC+8:00 in minutes
+      const currentDateInPhilippines = new Date(Date.now() + philippinesTimeZoneOffset * 60 * 1000);
+
+      const currentTime = currentDateInPhilippines;
       const appointmentDate = appointment.datetime;
       const oneHourAhead = new Date(appointmentDate.getTime() + 60 * 60 * 1000); // Add 1 hour to the appointment date
       const enabled =
@@ -39,8 +43,6 @@ const myappointmentAPI = async (req, res, next) => {
       const philippinesTimeZoneOffset = 8 * 60; // UTC+8:00 in minutes
       const currentDateInPhilippines = new Date(Date.now() + philippinesTimeZoneOffset * 60 * 1000);
 
-      console.log(currentDateInPhilippines);
-      
       const currentTime = currentDateInPhilippines
       const onlineConsultDate = onlineConsult.datetime;
       const oneHourAhead = new Date(
@@ -53,9 +55,9 @@ const myappointmentAPI = async (req, res, next) => {
       );
 
 
-      console.log(currentTime)
-      console.log(onlineConsultDate)
-      console.log(oneHourAhead)
+      console.log('The current time is ' + currentTime)
+      console.log('The conslt date is ' +onlineConsultDate)
+      console.log('The one hour ahead is' +oneHourAhead)
       const paymentEnabled = onlineConsult.status === "Approved";
       return {
         ...onlineConsult.toObject(),
