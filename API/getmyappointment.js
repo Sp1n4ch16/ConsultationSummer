@@ -46,15 +46,16 @@ const myappointmentAPI = async (req, res, next) => {
       const formattedDate = moment(onlineConsultDate).format(
         "MMMM Do YYYY, h:mm:ss a"
       );
-      const paymentEnabled = onlineConsult.status === "Approved";
-      const paymentDone = onlineConsult.paid === "Paid";
 
+        
+      console.log(currentTime)
+      console.log(onlineConsultDate)
+      const paymentEnabled = onlineConsult.status === "Approved";
       return {
         ...onlineConsult.toObject(),
         enabled,
         formattedDate,
         paymentEnabled,
-        paymentDone,
       };
     });
 
