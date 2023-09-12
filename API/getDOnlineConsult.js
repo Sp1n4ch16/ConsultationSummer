@@ -15,7 +15,7 @@ const DOnlineConsultAPI = async (req, res) => {
             onlineConsultDate.getTime() + 60 * 60 * 1000
           ); // Add 1 hour to the appointment date
           const enabled =
-            currentTime > onlineConsultDate && currentTime < oneHourAhead; // Determine if the button should be enabled
+            onlineConsult.paid === "Paid" && currentTime > onlineConsultDate && currentTime < oneHourAhead;
           const formattedDate = moment(onlineConsultDate).format(
             "MMMM Do YYYY, h:mm:ss a"
           ); // Format the date
