@@ -35,8 +35,13 @@ const myappointmentAPI = async (req, res, next) => {
     });
 
     const onlineConsultList = onlineConsult.map(onlineConsult => {
+
+      const philippinesTimeZoneOffset = 8 * 60; // UTC+8:00 in minutes
+      const currentDateInPhilippines = new Date(Date.now() + philippinesTimeZoneOffset * 60 * 1000);
+
+      console.log(currentDateInPhilippines);
       
-      const currentTime = new Date()
+      const currentTime = currentDateInPhilippines
       const onlineConsultDate = onlineConsult.datetime;
       const oneHourAhead = new Date(
         onlineConsultDate.getTime() + 60 * 60 * 1000
@@ -47,9 +52,10 @@ const myappointmentAPI = async (req, res, next) => {
         "MMMM Do YYYY, h:mm:ss a"
       );
 
-        
+
       console.log(currentTime)
       console.log(onlineConsultDate)
+      console.log(oneHourAhead)
       const paymentEnabled = onlineConsult.status === "Approved";
       return {
         ...onlineConsult.toObject(),
