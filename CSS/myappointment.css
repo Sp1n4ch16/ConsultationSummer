@@ -145,3 +145,8 @@ td .popup-image img {
 
   vertical-align: middle;
 }
+
+.hidden {
+  display: none;
+  visibility: hidden;
+}

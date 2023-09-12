@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Document</title>
   <link rel="stylesheet" href="/myappointment.css" />
+  <script>
+    const number = 0
+  </script>
 </head>
 <body>
   <div class="sidebar">
@@ -27,9 +30,10 @@
       <table>
         <thead>
           <tr>
-            <th>ID</th>
-            <th>Email</th>
+            <th>No.</th>
+            <th>Name</th>
             <th>Age</th>
+            <th>Gender</th>
             <th>Description</th>
             <th>Services</th>
             <th>Date</th>
@@ -38,11 +42,14 @@
           </tr>
         </thead>
         <tbody>
+          <% let appointmentNumber = 1; %>
           <% appointmentList.forEach(appointment => { %>
           <tr>
-            <td><%= appointment._id %></td>
-            <td><%= appointment.email %></td>
+            <td class="hidden"><%= appointment._id %></td>
+            <td><%= appointmentNumber %></td>
+            <td><%= fullname %></td>
             <td><%= appointment.age %></td>
+            <td><%= appointment.gender %></td>
             <td class="description"><%= appointment.description %></td>
             <td><%= appointment.services %></td>
             <td><%= appointment.formattedDate %></td>
@@ -51,6 +58,7 @@
               <button class="cancel-button">Cancel</button>
             </td>
           </tr>
+          <% appointmentNumber++; %>
           <% }) %>
         </tbody>
       </table>
@@ -62,7 +70,7 @@
       <table>
         <thead>
           <tr>
-            <th>ID</th>
+            <th>No.</th>
             <th>Name</th>
             <th>Age</th>
             <th>Gender</th>
@@ -74,9 +82,11 @@
           </tr>
         </thead>
         <tbody>
+          <% let consultNumber = 1; %>
           <% onlineConsultList.forEach(onlineConsultation => { %>
           <tr>
-            <td><%= onlineConsultation._id %></td>
+            <td class="hidden"><%= onlineConsultation._id %></td>
+            <td><%= consultNumber %></td>
             <td><%= fullname %></td>
             <td><%= age %></td>
             <td><%= gender %></td>
@@ -90,6 +100,7 @@
               <button class="payment-button" <%= onlineConsultation.paymentEnabled ? '' : 'disabled' %>>Payment</button>
             </td>
           </tr>
+          <% consultNumber++; %>
           <% }) %>
         </tbody>
       </table>
@@ -127,7 +138,7 @@
 
     paymentButtons.forEach((button) => {
       const parentRow = button.closest('tr');
-      const paidStatus = parentRow.querySelector('td:nth-child(7)').textContent;
+      const paidStatus = parentRow.querySelector('td:nth-child(8)').textContent;
 
       if (paidStatus === 'Paid') {
         // If the status is "Paid," disable the payment button

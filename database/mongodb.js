@@ -143,6 +143,9 @@ const appointmentSchema = new mongoose.Schema(
     time:{
       type: String,
     },
+    gender: {
+      type: String,
+    },
     datetime:{
       type:Date
     },
@@ -230,6 +233,9 @@ const appointmentDoneschema = new mongoose.Schema(
     },
     date: {
       type: Date,
+    },
+    gender: {
+      type: String,
     },
     description: {
       type: String,
