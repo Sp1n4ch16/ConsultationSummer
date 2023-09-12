@@ -18,7 +18,14 @@ const approvedAPI = async (req, res) => {
         from: ' "Your Appointment is approved" <dummy8270@gmail.com>',
         to: onlineConsult.email,
         subject: 'Dr. Ryan Pangilinan dental clinic',
-        html: `<h2> Your Online Consultation in Dr. Ryan Pangilinan dental clinic has been approved. You can now pay for the appointment to proceed.</h2>`,
+        html: `<h2> Your Online Consultation in Dr. Ryan Pangilinan dental clinic has been approved. You can now pay for the appointment to proceed.</h2>
+                <p>Consultation ID: ${onlineConsult._id}</p>
+                <p>Consultation Name: ${onlineConsult.name}</p>
+                <p>Consultation Email: ${onlineConsult.email}</p>
+                <p>Consultation Date: ${onlineConsult.datetime}</p>
+                <p>Consultation Description: ${onlineConsult.description}</p>
+                <p>Consultation Contact Number: ${onlineConsult.contact_number}</p>
+        `,
       };
 
       transporter.sendMail(mailOptions, function (error, info) {
@@ -38,7 +45,15 @@ const approvedAPI = async (req, res) => {
         from: ' "Your Appointment is approved" <dummy8270@gmail.com>',
         to: appointment.email,
         subject: 'Dr. Ryan Pangilinan dental clinic',
-        html: `<h2> Your Appointment in Dr. Ryan Pangilinan dental clinic has been approved.</h2>`,
+        html: `<h2> Your Appointment in Dr. Ryan Pangilinan dental clinic has been approved.</h2>
+              <p>Appointment ID: ${appointment._id}</p>
+              <p>Appiontment Name: ${appointment.name}</p>
+              <p>Appiontment Email: ${appointment.email}</p>
+              <p>Appiontment Date: ${appointment.datetime}</p>
+              <p>Appiontment Description: ${appointment.description}</p>
+              <p>Appiontment Services: ${appointment.services}</p>
+              <p>Appiontment Contact Number: ${appointment.contact_number}</p>
+        `,
       };
 
       transporter.sendMail(mailOptions, function (error, info) {

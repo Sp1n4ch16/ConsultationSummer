@@ -106,6 +106,13 @@
           });
 
           approveButtons.forEach((button) => {
+            const parentRow = button.closest('tr');
+            const approveStatus = parentRow.querySelector('td:nth-child(8)').textContent;
+
+            if (approveStatus === 'Approved') {
+            // If the status is "Paid," disable the payment button
+             button.disabled = true;
+            }
             button.addEventListener('click', async () => {
               swal({
                   title: "Are you sure you want to approved this appointment?",

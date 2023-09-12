@@ -224,15 +224,23 @@ app.post('/docCancel-appointment', async (req, res) => {
       var mailOptions = {
         from: ' "Your Appointment is Cancel" <dummy8270@gmail.com>',
         to: appointment.email,
-        subject: "Dr. Ryan Pangilinan dental clinic",
-        html: `<h2> Your appointment has been cancel</h2>`,
+        subject: "Dr. Ryan Pangilinan Dental Clinic",
+        html: `<h2> Appointment has been cancel. </h2> <br>
+        <p>Appointment ID: ${appointment._id}</p>
+        <p>Appiontment Name: ${appointment.name}</p>
+        <p>Appiontment Email: ${appointment.email}</p>
+        <p>Appiontment Date: ${appointment.datetime}</p>
+        <p>Appiontment Description: ${appointment.description}</p>
+        <p>Appiontment Services: ${appointment.services}</p>
+        <p>Appiontment Contact Number: ${appointment.contact_number}</p>
+        `,
       };
     
       transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
           console.log(error);
         } else {
-          console.log("cancel message has been sent to the patient");
+          console.log("Appointment cancel message has been sent to the patient");
         }
       });
 
@@ -245,19 +253,25 @@ app.post('/docCancel-appointment', async (req, res) => {
 
 
     } else if(onlineConsult) {
-
       var mailOptions = {
         from: ' "Your Appointment is Cancel" <dummy8270@gmail.com>',
         to: onlineConsult.email,
         subject: "Dr. Ryan Pangilinan dental clinic",
-        html: `<h2> Your appointment has been cancel</h2>`,
+        html: `<h2> Consultation has been cancel. </h2> <br>
+        <p>Consultation ID: ${onlineConsult._id}</p>
+        <p>Consultation Name: ${onlineConsult.name}</p>
+        <p>Consultation Email: ${onlineConsult.email}</p>
+        <p>Consultation Date: ${onlineConsult.datetime}</p>
+        <p>Consultation Description: ${onlineConsult.description}</p>
+        <p>Consultation Contact Number: ${onlineConsult.contact_number}</p>
+      `,
       };
     
       transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
           console.log(error);
         } else {
-          console.log("cancel message has been sent to the patient");
+          console.log("Consultation cancel message has been sent to the patient");
         }
       });
 
@@ -275,10 +289,11 @@ app.post('/docCancel-appointment', async (req, res) => {
 
 var consult; // Declare consult variable outside of the route
 var fee;
+var doctor
 
 app.post('/pay', async (req, res) => {
   consult = req.body.appointmentId; // Declare consult using 'const'
-  const doctor = await Doctor.findOne({}); // Use findOne instead of find
+  doctor = await Doctor.findOne({}); // Use findOne instead of find
   fee = doctor.fee;
 
   const create_payment_json = {
@@ -287,10 +302,10 @@ app.post('/pay', async (req, res) => {
         "payment_method": "paypal"
     },
     "redirect_urls": {
-      //"return_url": "http://localhost:3000/success",
-      //"cancel_url": "http://localhost:3000/cancel"
-      "return_url": "https://consultationsummer.onrender.com/success",
-      "cancel_url": "https://consultationsummer.onrender.com/cancel"
+      "return_url": "http://localhost:3000/success",
+      "cancel_url": "http://localhost:3000/cancel"
+      //"return_url": "https://consultationsummer.onrender.com/success",
+      //"cancel_url": "https://consultationsummer.onrender.com/cancel"
     },
     "transactions": [{
         "item_list": {
@@ -323,6 +338,53 @@ app.get('/success', async (req, res) => {
 
     transactionId.paid = "Paid";
     await transactionId.save();
+
+    var mailOptions = {
+      from: ' "<dummy8270@gmail.com>',
+      to: transactionId.email,
+      subject: 'Dr. Ryan Pangilinan dental clinic',
+      html: `<h2> Consultation Payment Received. </h2> <br>
+              <p>Consultation Fee: ${fee}</p> <br>
+              <p>Consultation ID: ${transactionId._id}</p>
+              <p>Consultation Name: ${transactionId.name}</p>
+              <p>Consultation Email: ${transactionId.email}</p>
+              <p>Consultation Date: ${transactionId.datetime}</p>
+              <p>Consultation Description: ${transactionId.description}</p>
+              <p>Consultation Contact Number: ${transactionId.contact_number}</p>
+      `,
+    };
+
+    var mailOptionsDoctor = {
+      from: ' "<dummy8270@gmail.com>',
+      to: doctor.email,
+      subject: 'Dr. Ryan Pangilinan dental clinic',
+      html: `<h2> Consultation Payment Received. </h2> <br>
+            <p>Consultation Fee: ${fee}</p> <br>
+            <p>Consultation ID: ${transactionId._id}</p>
+            <p>Consultation Name: ${transactionId.name}</p>
+            <p>Consultation Email: ${transactionId.email}</p>
+            <p>Consultation Date: ${transactionId.datetime}</p>
+            <p>Consultation Description: ${transactionId.description}</p>
+            <p>Consultation Contact Number: ${transactionId.contact_number}</p>
+      `,
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+          console.log('Email receipt for online consultation has been sent');
+      }
+    });
+
+    transporter.sendMail(mailOptionsDoctor, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+          console.log('Email receipt for online consultation has been sent');
+      }
+    });
+
    console.log('Transaction marked as paid:', transactionId);
   } catch (error) {
     console.log(error);
