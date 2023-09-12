@@ -8,8 +8,11 @@ const moment = require("moment");
 
 const transferAppointmentsToHistory = async (req, res, next) => {
   try {
+    const philippinesTimeZoneOffset = 8 * 60; // UTC+8:00 in minutes
+    const currentDateInPhilippines = new Date(Date.now() + philippinesTimeZoneOffset * 60 * 1000);
+
     // Get the current time
-    const currentTime = new Date();
+    const currentTime = currentDateInPhilippines;
 
     // Calculate the time 1 hour ago
     const oneHourAgo = new Date(currentTime.getTime() - 60 * 60 * 1000);
