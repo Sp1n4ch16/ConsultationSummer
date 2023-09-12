@@ -126,6 +126,21 @@
     });
 
     paymentButtons.forEach((button) => {
+      const parentRow = button.closest('tr');
+      const paidStatus = parentRow.querySelector('td:nth-child(7)').textContent;
+
+      if (paidStatus === 'Paid') {
+        // If the status is "Paid," disable the payment button
+        button.disabled = true;
+      } else {
+        // Otherwise, enable the payment button
+        button.addEventListener('click', () => {
+          const appointmentId = parentRow.querySelector('td:first-child').textContent;
+          console.log(appointmentId);
+          submitPayment(appointmentId);
+        });
+      }
+      
       button.addEventListener('click', () => {
         const appointmentId = button.closest('tr').querySelector('td:first-child').textContent;
         console.log(appointmentId)

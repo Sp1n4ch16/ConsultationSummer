@@ -35,13 +35,8 @@ const myappointmentAPI = async (req, res, next) => {
     });
 
     const onlineConsultList = onlineConsult.map(onlineConsult => {
-      const utcDate = new Date();
-      const targetTimezone = 'Asia/Manila';
-      const options = { timeZone: targetTimezone, timeStyle: 'long', dateStyle: 'full' };
-      const phFormatter = new Intl.DateTimeFormat('en-PH', options);
-      const phTime = phFormatter.format(utcDate);
-
-      const currentTime = phTime
+      
+      const currentTime = new Date()
       const onlineConsultDate = onlineConsult.datetime;
       const oneHourAhead = new Date(
         onlineConsultDate.getTime() + 60 * 60 * 1000
@@ -52,12 +47,14 @@ const myappointmentAPI = async (req, res, next) => {
         "MMMM Do YYYY, h:mm:ss a"
       );
       const paymentEnabled = onlineConsult.status === "Approved";
+      const paymentDone = onlineConsult.paid === "Paid";
 
       return {
         ...onlineConsult.toObject(),
         enabled,
         formattedDate,
         paymentEnabled,
+        paymentDone,
       };
     });
 

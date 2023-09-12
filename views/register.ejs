@@ -29,7 +29,7 @@
           <label>Last Name</label>
         </div>
         <div class="txt_field">
-          <input type="text" name="contactNumber" required>
+          <input type="text" name="contactNumber" id="contactNumber" required>
           <label>Contact Number</label>
         </div>
         <div class="txt_field">
@@ -47,7 +47,7 @@
         <label for="female">Female</label>
 
         <div class="txt_field">
-          <input type="text" name="email" required />
+          <input type="text" name="email" id="email" required />
           <label>Email</label>
         </div>
         <div class="txt_field">
@@ -66,6 +66,8 @@
       var letters = /^[a-zA-z]*$/;
       const firstName = document.getElementById('fname');
       const lastName = document.getElementById('lname');
+      const emailInput = document.getElementById('email');
+      const contactNumberInput = document.getElementById('contactNumber');
 
         flatpickr("#datetime", {
         dateFormat: "Y-m-d",
@@ -94,6 +96,14 @@
           }
           else if (!lastName.value.match(letters)){
             alert(`${lastName.value} is not a valid last name`)
+            event.preventDefault();
+          }
+          else if (contactNumberInput.value.match(letters)){
+            alert(`${contactNumberInput.value} is not a valid phone number`)
+            event.preventDefault();
+          }
+          else if (!emailInput.value.match(/^[A-Za-z\._\-0-9]*[@][A-Za-z]*[\.][a-z]{2,4}$/)){
+            alert(`${emailInput.value} is not a valid email`)
             event.preventDefault();
           }
         });

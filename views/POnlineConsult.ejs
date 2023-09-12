@@ -23,7 +23,6 @@
   </div>
 
     <div class="center">
-      <input type="text" name="dateTime" class="hidden" id="datetime">
       <form
         action="/POnlineConsult"
         method="post"
@@ -39,7 +38,7 @@
         <div class="doctor">₱<%= doctor.fee %></div>
         <% }) %>
         <div class="txt_field">
-          <input id="datetime" name="date" class="date" id="date" required />
+          <input id="datetime" name="date" class="date" required />
           <label>Date</label>
         </div>
         <div class="time">
@@ -64,10 +63,20 @@
             <label for="5th">4pm - 5pm</label >
           </div>
         </div>
-        <div class="txt_field">
-          <input type="text" name="description" required />
-          <label>Chief Complain</label>
-        </div>
+
+            <select name="description" id="description" class="select" required>
+              <option value="" disabled selected>--Chief Complain--</option>
+              <option value="sensitivity to cold or hot food or drinks">sensitivity to cold or hot food or drinks</option>
+              <option value="loose teeth">loose teeth</option>
+              <option value="sudden pain when eating cold or sweet foods">sudden pain when eating cold or sweet foods</option>
+              <option value="tooth changing color or shape">tooth changing color or shape</option>
+              <option value="worn teeth, including holes, cracks, or chips on the tooth">worn teeth, including holes, cracks, or chips on the tooth</option>
+              <option value="bleeding or swollen gums">bleeding or swollen gums</option>
+              <option value="gum pain">gum pain</option>
+              <option value="swollen cheeks">swollen cheeks</option>
+              <option value="clicking jaw">clicking jaw</option>
+            </select>.
+
         <input type="submit" value="Submit"/>
       </form>
     </div>

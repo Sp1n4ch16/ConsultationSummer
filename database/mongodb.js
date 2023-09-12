@@ -154,10 +154,6 @@ const appointmentSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please enter your services"],
     },
-    image: {
-      data: Buffer,
-      contentType: String,
-    },
     email: {
       type: String,
     },
