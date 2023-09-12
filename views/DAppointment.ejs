@@ -29,9 +29,10 @@
           <table>
             <thead>
               <tr>
-                <th>ID</th>
-                <th>Email</th>
+                <th>No.</th>
+                <th>Name</th>
                 <th>Age</th>
+                <th>Gender</th>
                 <th>Description</th>
                 <th>Services</th>
                 <th>Date</th>
@@ -40,11 +41,14 @@
               </tr>
             </thead>
             <tbody>
+              <% let appointmentNumber = 1 %>
               <% appointmentList.forEach(appointment => { %>
               <tr>
-                <td><%= appointment._id %></td>
-                <td><%= appointment.email %></td>
+                <td class="hidden"><%= appointment._id %></td>
+                <td><%= appointmentNumber %></td>
+                <td><%= appointment.name %></td>
                 <td><%= appointment.age %></td>
+                <td><%= appointment.gender %></td>
                 <td><%= appointment.description %></td>
                 <td><%= appointment.services %></td>
                 <td><%= appointment.formattedDate %></td>
@@ -54,6 +58,7 @@
                   <button class="cancel-button">Cancel</button>
                 </td>
               </tr>
+              <% appointmentNumber++ %>
               <% }) %>
             </tbody>
           </table>
@@ -103,7 +108,14 @@
 
 
           approveButtons.forEach((button) => {
-            button.addEventListener('click', async () => {
+            const parentRow = button.closest('tr');
+            const approveStatus = parentRow.querySelector('td:nth-child(9)').textContent;
+
+            if (approveStatus === 'Approved') {
+            // If the status is "Paid," disable the payment button
+             button.disabled = true;
+            }else{
+              button.addEventListener('click', async () => {
               const appointmentId = button.closest('tr').querySelector('td:first-child').textContent;
               swal({
                   title: "Are you sure you want to approved this appointment?",
@@ -134,6 +146,7 @@
               })
               return false;
             });
+            }
           });
         </script>
   </body>

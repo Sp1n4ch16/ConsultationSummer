@@ -202,3 +202,8 @@ tbody tr:hover {
   box-shadow: 6px 6px 29px -4px rgba(0, 0, 0, 0.75);
   cursor: pointer;
 }
+
+.hidden {
+  display: none;
+  visibility: hidden;
+}

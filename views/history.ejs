@@ -64,24 +64,31 @@
           <table>
             <thead>
               <tr>
-                <th>ID</th>
-                <th>Email</th>
+                <th>No.</th>
+                <th>Name</th>
                 <th>Age</th>
+                <th>Gender</th>
                 <th>Description</th>
                 <th>Date</th>
+                <th>Paid</th>
                 <th>Status</th>
               </tr>
             </thead>
             <tbody>
+              <% let consultHistoryNumber = 1 %>
               <% consultHistoryList.forEach(consultHistory => { %>
               <tr>
-                <td><%= consultHistory._id %></td>
-                <td><%= consultHistory.email %></td>
+                <td class="hidden"><%= consultHistory._id %></td>
+                <td><%= consultHistoryNumber %></td>
+                <td><%= consultHistory.name %></td>
                 <td><%= consultHistory.age %></td>
+                <td><%= consultHistory.gender %></td>
                 <td><%= consultHistory.description %></td>
                 <td><%= consultHistory.formattedDate %></td>
+                <td><%= consultHistory.paid %></td>
                 <td><%= consultHistory.status %></td>
               </tr>
+              <% consultHistoryNumber++ %>
               <% }) %>
             </tbody>
           </table>

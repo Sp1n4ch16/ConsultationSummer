@@ -29,7 +29,7 @@
           <table>
             <thead>
               <tr>
-                <th>ID</th>
+                <th>No.</th>
                 <th>Name</th>
                 <th>Age</th>
                 <th>Gender</th>
@@ -41,9 +41,11 @@
               </tr>
             </thead>
             <tbody>
+              <% let consultNumber = 1 %>
               <% onlineConsultList.forEach(onlineConsult => { %>
               <tr>
-                <td><%= onlineConsult._id %></td>
+                <td class="hidden"><%= onlineConsult._id %></td>
+                <td><%= consultNumber %></td>
                 <td><%= onlineConsult.name %></td>
                 <td><%= onlineConsult.age %></td>
                 <td><%= onlineConsult.gender %></td>
@@ -57,6 +59,7 @@
                   <button class="cancel-button">Cancel</button>
                 </td>
               </tr>
+              <% consultNumber++ %>
               <% }) %>
             </tbody>
           </table>
@@ -107,7 +110,7 @@
 
           approveButtons.forEach((button) => {
             const parentRow = button.closest('tr');
-            const approveStatus = parentRow.querySelector('td:nth-child(8)').textContent;
+            const approveStatus = parentRow.querySelector('td:nth-child(9)').textContent;
 
             if (approveStatus === 'Approved') {
             // If the status is "Paid," disable the payment button

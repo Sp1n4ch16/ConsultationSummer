@@ -284,6 +284,9 @@ const onlineConsultDoneschema = new mongoose.Schema(
     email: {
       type: String,
     },
+    paid: {
+      type: String
+    },
     gender: {
       type: String,
     },
