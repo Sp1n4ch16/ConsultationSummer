@@ -67,7 +67,10 @@
       const firstName = document.getElementById('fname');
       const lastName = document.getElementById('lname');
       const emailInput = document.getElementById('email');
+
       const contactNumberInput = document.getElementById('contactNumber');
+      const get_num = String(contactNumberInput.value).charAt(0)
+      const first_num = Number(get_num)
 
         flatpickr("#datetime", {
         dateFormat: "Y-m-d",
@@ -98,7 +101,7 @@
             alert(`${lastName.value} is not a valid last name`)
             event.preventDefault();
           }
-          else if (contactNumberInput.value.match(letters)){
+          else if (contactNumberInput.value.match(letters) || contactNumberInput.value.length !=11){
             alert(`${contactNumberInput.value} is not a valid phone number`)
             event.preventDefault();
           }
