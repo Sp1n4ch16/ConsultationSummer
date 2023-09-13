@@ -52,6 +52,8 @@ function timeConverter(time) {
     '2pm': 14,
     '4pm': 16,
     '5pm': 17,
+    '6pm': 18,
+    '7pm': 19,
     // Add more time options as needed
   };
 
