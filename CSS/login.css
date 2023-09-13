@@ -105,12 +105,11 @@ header {
   justify-content: center;
   height: 100px;
   width: 100%;
-
-  
+ 
 }
 
 img {
-  height: 100%;
-  width: auto;
-  border-radius: 50%;
+  height: 150px;
+  width: 150px;
+  object-fit: scale-down;
 }
