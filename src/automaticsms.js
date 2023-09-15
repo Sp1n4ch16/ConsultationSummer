@@ -41,7 +41,15 @@ const automaticSMS =  (req, res) => {
                         from: ' "<dummy8270@gmail.com>',
                         to: appointment.email,
                         subject: 'Dr. Ryan Pangilinan dental clinic',
-                        html: `<h2> You have incoming appointment in Dr. Ryan Pangilinan Clinic.</h2>`,
+                        html: `<h2> You have incoming appointment in Dr. Ryan Pangilinan Clinic.</h2>
+                                <p>Consultation ID: ${appointment._id}</p>
+                                <p>Consultation Name: ${appointment.name}</p>
+                                <p>Consultation Email: ${appointment.email}</p>
+                                <p>Consultation Date: ${appointment.datetime}</p>
+                                <p>Consultation Description: ${appointment.description}</p>
+                                <p>Consultation Description: ${appointment.services}</p>
+                                <p>Consultation Contact Number: ${appointment.contact_number}</p>
+                        `,
                       };
                 
                       transporter.sendMail(mailOptions, function (error, info) {
@@ -80,7 +88,15 @@ const automaticSMS =  (req, res) => {
                         from: ' "<dummy8270@gmail.com>',
                         to: consult.email,
                         subject: 'Dr. Ryan Pangilinan dental clinic',
-                        html: `<h2> You have incoming Online consultation in Dr. Ryan Pangilinan Clinic.</h2>`,
+                        html: `<h2> You have incoming Online consultation in Dr. Ryan Pangilinan Clinic.</h2>
+                                <p>Consultation Fee: ${fee}</p> <br>
+                                <p>Consultation ID: ${consult._id}</p>
+                                <p>Consultation Name: ${consult.name}</p>
+                                <p>Consultation Email: ${consult.email}</p>
+                                <p>Consultation Date: ${consult.datetime}</p>
+                                <p>Consultation Description: ${consult.description}</p>
+                                <p>Consultation Contact Number: ${consult.contact_number}</p>
+                        `,
                     };
     
                     transporter.sendMail(mailOptions, function (error, info) {
