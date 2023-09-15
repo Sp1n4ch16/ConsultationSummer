@@ -21,7 +21,8 @@ const automaticSMS =  (req, res) => {
             console.log(`the current time is ${currentTime}`)
         
             appointments.forEach(appointment => {
-                const appointmentDate = new Date(appointment.datetime);
+                const appointmentDate = appointment.datetime;
+                console.log(`The appointmentDate is ${appointmentDate}`)
                 const smsSendTime = new Date(appointmentDate.getTime() - 30 * 60 * 1000);
         
                 if (currentTime >= smsSendTime && currentTime < appointmentDate && !appointment.smsSent) {
@@ -67,7 +68,8 @@ const automaticSMS =  (req, res) => {
             });
 
             onlineConsult.forEach(consult => {
-                const onlineConsultDate = new Date(consult.datetime);
+                const onlineConsultDate = consult.datetime;
+                console.log(`The onlineConsultDate is ${onlineConsultDate}`)
                 const smsSendTime = new Date(onlineConsultDate.getTime() - 30 * 60 * 1000);
         
                 if (currentTime >= smsSendTime && currentTime < onlineConsultDate && !consult.smsSent) {
