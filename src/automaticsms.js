@@ -114,6 +114,7 @@ const automaticSMS =  (req, res) => {
             console.log(error);
         }
         console.log("running every minute")
+        console.log(`The current time is ${currentTime}`)
 
     })
 
