@@ -462,11 +462,12 @@ app.post("/prescription",uploadprescription.single("image"), (req, res) => {
     name: req.body.email,
     picture: req.file.originalname,
   };
+  
   //send verification to the user
   var mailOptions = {
-    from: ' "Verify your email" <dummy8270@gmail.com>',
+    from: '<dummy8270@gmail.com>',
     to: data.name,
-    subject: "Dr. Ryan -verify your email",
+    subject: "Prescription",
     html: `<h2> Thanks for Consulting in Dr. Ryan Dental Clinic here's your prescription! </h2>`,
     attachments: [
       {
