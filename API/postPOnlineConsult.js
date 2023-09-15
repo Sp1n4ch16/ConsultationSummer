@@ -48,6 +48,7 @@ function timeConverter(time) {
   const timeMap = {
     '8am': 8,
     '10am': 10,
+    '11am': 11,
     '12pm': 12,
     '2pm': 14,
     '4pm': 16,

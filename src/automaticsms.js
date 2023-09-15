@@ -15,7 +15,9 @@ const automaticSMS =  (req, res) => {
             const appointments = await Appointment.find({});
             const onlineConsult = await OnlineConsult.find({});
         
-            const currentTime = new Date();
+            const philippinesTimeZoneOffset = 8 * 60; // UTC+8:00 in minutes
+            const currentDateInPhilippines = new Date(Date.now() + philippinesTimeZoneOffset * 60 * 1000);
+            const currentTime = currentDateInPhilippines;
         
             appointments.forEach(appointment => {
                 const appointmentDate = new Date(appointment.datetime);
