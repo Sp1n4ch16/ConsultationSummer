@@ -17,7 +17,7 @@ const automaticSMS =  (req, res) => {
         
             const philippinesTimeZoneOffset = 8 * 60; // UTC+8:00 in minutes
             const currentDateInPhilippines = new Date(Date.now() + philippinesTimeZoneOffset * 60 * 1000);
-            const currentTime = new Date(currentDateInPhilippines);
+            const currentTime = new Date();
             console.log(currentTime)
 
         
@@ -74,7 +74,6 @@ const automaticSMS =  (req, res) => {
                 const smsSendTime = new Date(onlineConsultDate.getTime() - 30 * 60 * 1000);
                 console.log(smsSendTime)
         
-                if (currentTime >= smsSendTime && currentTime < onlineConsultDate && !consult.smsSent) {
                     // Update the appointment's smsSent property to true
                     consult.smsSent = true;
                     consult.save();
@@ -111,7 +110,7 @@ const automaticSMS =  (req, res) => {
                             console.log('Email notificaition for Online Consultation before 30min has been sent');
                         }
                     });
-                }
+                
               });    
 
         } catch (error) {
