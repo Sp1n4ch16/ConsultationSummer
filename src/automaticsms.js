@@ -17,12 +17,13 @@ const automaticSMS =  (req, res) => {
         
             const philippinesTimeZoneOffset = 8 * 60; // UTC+8:00 in minutes
             const currentDateInPhilippines = new Date(Date.now() + philippinesTimeZoneOffset * 60 * 1000);
-            const currentTime = currentDateInPhilippines;
-            console.log(`the current time is ${currentTime}`)
+            const currentTime = new Date(currentDateInPhilippines);
+            console.log(currentTime)
+
         
             appointments.forEach(appointment => {
-                const appointmentDate = appointment.datetime;
-                console.log(`The appointmentDate is ${appointmentDate}`)
+                const appointmentDate = new Date(appointment.datetime);
+                console.log(appointmentDate)
                 const smsSendTime = new Date(appointmentDate.getTime() - 30 * 60 * 1000);
         
                 if (currentTime >= smsSendTime && currentTime < appointmentDate && !appointment.smsSent) {
@@ -68,9 +69,10 @@ const automaticSMS =  (req, res) => {
             });
 
             onlineConsult.forEach(consult => {
-                const onlineConsultDate = consult.datetime;
-                console.log(`The onlineConsultDate is ${onlineConsultDate}`)
+                const onlineConsultDate = new Date(consult.datetime);
+                console.log(onlineConsultDate)
                 const smsSendTime = new Date(onlineConsultDate.getTime() - 30 * 60 * 1000);
+                console.log(smsSendTime)
         
                 if (currentTime >= smsSendTime && currentTime < onlineConsultDate && !consult.smsSent) {
                     // Update the appointment's smsSent property to true
