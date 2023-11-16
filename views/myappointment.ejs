@@ -10,102 +10,115 @@
   </script>
 </head>
 <body>
-  <div class="sidebar">
-    <header><%= patientName %></header>
-    <ul>
-        <li><a href="Phome"><i class="fas fa-qrcode"></i>Dashboard</a></li>
-        <li><a href="/PAppointment"><i class="fas fa-qrcode"></i>Appointment</a></li>
-        <li><a href="/POnlineConsult"><i class="fas fa-stream"></i>Online Consultation</a></li>
-        <li><a href="/history"><i class="fas fa-question-circle"></i>History</a></li>
-        <div class="space"></div>
-        <li><a href="/MyAccount"><i class="fas fa-sliders-h"></i>My Account</a></li>
-        <li><a href="/"><i class="fas fa-envelope"></i>Logout</a></li>
-    </ul>
-  </div>
-  <main class="table">
-    <section class="table_header">
-      <h1>Appointment</h1>
-    </section>
-    <section class="table_body">
-      <table>
-        <thead>
-          <tr>
-            <th>No.</th>
-            <th>Name</th>
-            <th>Age</th>
-            <th>Gender</th>
-            <th>Description</th>
-            <th>Services</th>
-            <th>Date</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% let appointmentNumber = 1; %>
-          <% appointmentList.forEach(appointment => { %>
-          <tr>
-            <td class="hidden"><%= appointment._id %></td>
-            <td><%= appointmentNumber %></td>
-            <td><%= fullname %></td>
-            <td><%= appointment.age %></td>
-            <td><%= appointment.gender %></td>
-            <td class="description"><%= appointment.description %></td>
-            <td><%= appointment.services %></td>
-            <td><%= appointment.formattedDate %></td>
-            <td><%= appointment.status %></td>
-            <td>
-              <button class="cancel-button">Cancel</button>
-            </td>
-          </tr>
-          <% appointmentNumber++; %>
-          <% }) %>
-        </tbody>
-      </table>
-    </section>
-    <section class="table_header">
-      <h1>Online Consultation Appointment</h1>
-    </section>
-    <section class="table_body">
-      <table>
-        <thead>
-          <tr>
-            <th>No.</th>
-            <th>Name</th>
-            <th>Age</th>
-            <th>Gender</th>
-            <th>Description</th>
-            <th>Date</th>
-            <th>Paid</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% let consultNumber = 1; %>
-          <% onlineConsultList.forEach(onlineConsultation => { %>
-          <tr>
-            <td class="hidden"><%= onlineConsultation._id %></td>
-            <td><%= consultNumber %></td>
-            <td><%= fullname %></td>
-            <td><%= age %></td>
-            <td><%= gender %></td>
-            <td class="description"><%= onlineConsultation.description %></td>
-            <td><%= onlineConsultation.formattedDate %></td>
-            <td><%= onlineConsultation.paid %></td>
-            <td><%= onlineConsultation.status %></td>
-            <td>
-              <button onclick="document.location= './room'" <%= onlineConsultation.enabled ? '' : 'disabled' %>>Join</button>
-              <button class="cancel-button">Cancel</button>
-              <button class="payment-button" <%= onlineConsultation.paymentEnabled ? '' : 'disabled' %>>Payment</button>
-            </td>
-          </tr>
-          <% consultNumber++; %>
-          <% }) %>
-        </tbody>
-      </table>
-    </section>
-  </main>
+
+
+  <header>
+        <div class="logo">
+            <img src="./logo.png" alt="Logo.png">
+            <h2>EzDok</h2>
+        </div>
+        
+        <ul>
+            <li><a href="/PHome">Home</a></li>
+            <li><a href="/MyAccount"><%= patientName %></a></li>
+            <li><a href="/login">Logout</a></li>
+        </ul>
+    </header>
+
+    <div class="container">
+
+        <main class="table">
+            <section class="table_header">
+              <h1>Appointment</h1>
+            </section>
+            <section class="table_body">
+              <table>
+                <thead>
+                  <tr>
+                    <th>No.</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Gender</th>
+                    <th>Services</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% let appointmentNumber = 1; %>
+                  <% appointmentList.forEach(appointment => { %> 
+                  <tr>
+                    <td class="hidden"><%= appointment._id %></td>
+                    <td><%= appointmentNumber %></td>
+                    <td><%= fullname %></td>
+                    <td><%= appointment.age %></td>
+                    <td><%= appointment.gender %></td>
+                    <td><%= appointment.services %></td>
+                    <td><%= appointment.formattedDate %></td>
+                    <td><%= appointment.status %></td>
+                    <td>
+                      <button class="cancel-button">Cancel</button>
+                    </td>
+                  </tr>
+                  <% appointmentNumber++; %>
+                  <% }) %>
+                </tbody>
+              </table>
+            </section>
+          </main>
+    </div>
+
+
+    <div class="container">
+
+        <main class="table">
+            <section class="table_header">
+                <h1>Online Consultation Appointment</h1>
+            </section>
+            <section class="table_body">
+                <table>
+                <thead>
+                    <tr>
+                    <th>No.</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Gender</th>
+                    <th>Description</th>
+                    <th>Date</th>
+                    <th>Paid</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% let consultNumber = 1; %>
+                    <% onlineConsultList.forEach(onlineConsultation => { %>
+                    <tr>
+                    <td class="hidden"><%= onlineConsultation._id %></td>
+                    <td><%= consultNumber %></td>
+                    <td><%= fullname %></td>
+                    <td><%= age %></td>
+                    <td><%= gender %></td>
+                    <td class="description"><%= onlineConsultation.description %></td>
+                    <td><%= onlineConsultation.formattedDate %></td>
+                    <td><%= onlineConsultation.paid %></td>
+                    <td><%= onlineConsultation.status %></td>
+                    <td class="action">
+                        <button class="join-button" onclick="document.location= './room'" <%= onlineConsultation.enabled ? '' : 'disabled' %>>Join</button>
+                        <button class="cancel-button">Cancel</button>
+                        <button class="payment-button" <%= onlineConsultation.paymentEnabled ? '' : 'disabled' %>>Payment</button>
+                    </td>
+                    </tr>
+                    <% consultNumber++; %>
+                    <% }) %> 
+                </tbody>
+                </table>
+            </section>
+        </main>
+
+    </div>
+
 
   <script>
     const cancelButtons = document.querySelectorAll('.cancel-button');

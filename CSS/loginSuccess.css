@@ -2,11 +2,12 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
+  font-family: "Poppins", sans-serif; 
 }
-body {
-  background: url(./background.jpg);
+body{
+  background: linear-gradient(112.6deg, rgb(56, 24, 40) -10.7%, rgb(23, 148, 185) 100.2%);;
 }
+
 .container {
   width: 100%;
   height: 100vh;
@@ -25,6 +26,8 @@ body {
   text-align: center;
   padding: 0 30px 30px;
   color: #333;
+  border: 2px solid gray;
+  box-shadow: 0 0.4rem 0.8rem #0005;
 }
 .popup h2 {
   font-size: 38px;

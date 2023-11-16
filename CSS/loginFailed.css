@@ -5,7 +5,7 @@
   font-family: "Poppins", sans-serif;
 }
 body {
-  background: url(./background.jpg);
+  background: linear-gradient(112.6deg, rgb(56, 24, 40) -10.7%, rgb(23, 148, 185) 100.2%);;
 }
 .container {
   width: 100%;

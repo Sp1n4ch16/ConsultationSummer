@@ -8,42 +8,62 @@
     <title>Document</title>
   </head>
   <body>
-    <div class="sidebar">
-      <header><%= fullname %></header>
+    <header>
+      <div class="logo">
+          <img src="/logo.png" alt="Logo.png">
+          <h2>EzDok</h2>
+      </div>
+      
       <ul>
-          <li><a href="/DAppointment"><i class="fas fa-qrcode"></i>Appointment</a></li>
-          <li><a href="/DOnlineConsult"><i class="fas fa-stream"></i>Online Consultation</a></li>
-          <li><a href="/DHistory"><i class="fas fa-calendar-week"></i>History</a></li>
-          <li><a href="/DoctorInfo"><i class="fas fa-question-circle"></i>Doctor Information</a></li>
-          <div class="space"></div>
-          <li><a href="/"><i class="fas fa-envelope"></i>Logout</a></li>
+          <li class="active-li"><a href="/PHome" class="active-a">Home</a></li>
+          <li><a href="/DoctorInfo"><%= fullname %></a></li>
+          <li><a href="/">Logout</a></li>
       </ul>
-  </div>
+  </header>
 
-    <div class="center">
-      <input
-        type="submit"
-        value="Appointment Schedule"
-        onclick="document.location= './DAppointment' "
-      />
-      <br />
-      <input
-        type="submit"
-        value="Online Appointment Schedule"
-        onclick="document.location= './DOnlineConsult' "
-      />
-      <br />
-      <input
-        type="submit"
-        value="History"
-        onclick="document.location= './DHistory' "
-      />
-      <br />
-      <input
-        type="submit"
-        value="Doctor Information"
-        onclick="document.location= './DoctorInfo' "
-      />
+  <div class="content">
+
+    <div class="Online-Consult-Button container">
+        <div class="left">
+            <img src="/Online-doctor-consultation.png" alt="" class="container-img">
+        </div>
+        <div class="right">
+            <h2>View my online consultation schedule</h2>
+            <p>Online consultation schedule allows you doc to view and monitor the patient who booked for online consultation</p>
+            <button class="button" onclick="document.location= './DOnlineConsult'">
+                <i class="fa-solid fa-plus"></i>
+                View Consultation
+            </button>
+        </div>
     </div>
+
+    <div class="Appointment-Button container">
+        <div class="left">
+            <img src="/Appointment-logo.png" alt="" class="container-img">
+        </div>
+        <div class="right flex">
+            <h2>View my appointment schedule</h2>
+            <p>Appointment schedule allows you doc to view and monitor the patient who booked for an appointment which is the type of patient that will go to your clinic.</p>
+            <button class="button" onclick="document.location= './DAppointment' ">
+                <i class="fa-solid fa-plus"></i>
+                View Appointment
+            </button>
+        </div>
+    </div>
+
+    <div class="History-Button container">
+        <div class="left">
+            <img src="/MyHistory-logo.png" alt="" class="container-img">
+        </div>
+        <div class="right flex">
+            <h2>My History</h2>
+            <p>My History shows you all of the transaction or schedule that you engage with this application.</p>
+            <button class="button" onclick="document.location= './DHistory' ">
+                <i class="fa-solid fa-file-medical"></i>
+                View my History
+            </button>
+        </div>
+    </div>
+</div>
   </body>
 </html>

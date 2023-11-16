@@ -1,110 +1,133 @@
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="/PAppointment.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
-    />
+    <link rel="stylesheet" href="/PAppointment.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-  </head>
-
-  <body>
-    <div class="sidebar">
-      <header><%= patientName %></header>
-      <ul>
-          <li><a href="/Phome"><i class="fas fa-qrcode"></i>Dashboard</a></li>
-          <li><a href="/POnlineConsult"><i class="fas fa-qrcode"></i>Online Consultation</a></li>
-          <li><a href="/myappointment"><i class="fas fa-calendar-week"></i>My Appointment</a></li>
-          <li><a href="/history"><i class="fas fa-question-circle"></i>History</a></li>
-          <div class="space"></div>
-          <li><a href="/MyAccount"><i class="fas fa-sliders-h"></i>My Account</a></li>
-          <li><a href="/"><i class="fas fa-envelope"></i>Logout</a></li>
-      </ul>
-  </div>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="./logo.png" alt="Logo.png">
+            <h2>EzDok</h2>
+        </div>
+        
+        <ul>
+            <li><a href="/PHome">Home</a></li>
+            <li><a href="/MyAccount"><%= patientName %></a></li>
+            <li><a href="/">Logout</a></li>
+        </ul>
+    </header>
 
     <div class="center">
-      <input type="text" name="antiSpam" class="hidden">
-      <form action="/PAppointment" method="post" enctype="multipart/form-data" id="myForm">
-        <h1>Appointment</h1>
-        <div class="image">
-          <img src="./dentist.png" alt="Error" />
-        </div>
-        <div class="doctor">Dr. Ryan</div>
-        <div class="doctor"></div>
-        <div class="txt_field">
-          <input id="datetime" name="date" required />
-          <label>Date</label>
-        </div>
-        <div class="time">
-          <div class="time-schedule">
-            <input type="radio" name="time" id="time" value="8am">
-            <label for="1st">8am - 9am</label>
-          </div>
-          <div class="time-schedule">
-            <input type="radio" name="time" id="time" value="10am">
-            <label for="2nd">10am - 11am</label >
-          </div>
-          <div class="time-schedule">
-            <input type="radio" name="time" id="time" value="11am">
-            <label for="3rd">11am - 12pm</label >
-          </div>
-          <div class="time-schedule">
-            <input type="radio" name="time" id="time" value="2pm">
-          <label for="4th">2pm - 3pm</label >
-          </div>
-          <div class="time-schedule">
-            <input type="radio" name="time" id="time" value="4pm">
-            <label for="5th">4pm - 5pm</label >
-          </div>
-        </div>
-        <div class="txt_field">
-          <input type="text" name="description" required />
-          <label>Chief Complain</label>
-        </div>
-        <div class="services">
-          <select name="services" id="services" class="select" required>
-            <option value="" disabled selected>--Select Services--</option>
-            <option value="Consultation">Consultation</option>
-            <option value="Oral Exam">Oral Exam</option>
-            <option value="Oral Prophylaxis">Oral Prophylaxis</option>
-            <option value="Dental Restoration">Dental Restoration</option>
-            <option value="Dental Extraction">Dental Extraction</option>
-            <option value="Removal of Impacted tooth Surgical">
-              Removal of Impacted tooth Surgical
-            </option>
-            <option value="Facbrication of removal prosthesis">
-              Facbrication of removal prosthesis
-            </option>
-            <option value="Orthodentic treatment">Orthodentic treatment</option>
-            <option value="Aesthetic Dentistry">Aesthetic Dentistry</option>
-            <option value="Root Canal treatment">
-              Root Canal treatment
-            </option></select
-          >.
-        </div>
-        <input type="submit" value="Submit" onclick="spam()"/>
-      </form>
-    </div>
+          <h1>Appointment</h1>
+          <div class="content">
 
-    <script>
-      flatpickr("#datetime", {
-        dateFormat: "Y-m-d",
-        minDate: "today",
-        maxDate: new Date().fp_incr(14), // 14 days from now
-        //minTime: "08:00",
-        //maxTime: "17:00",
-      });
+            <div class="left">
 
-      document
-        .getElementById("myForm")
-        .addEventListener("submit", function (event) {
-          alert('Appointment successfully')
-      })
+              <div class="image">
+                <img src="./dentist.png" alt="Error" />
+              </div>
+              <div class="doctor">Dr. Ryan Pangilinan</div>
 
-    </script>
-  </body>
+            </div>
+
+
+            <div class="right">
+
+              <div class="container">
+                <h1>Fill up the form</h1>
+                <form
+                action="/PAppointment"
+                method="post"
+                enctype="multipart/form-data"
+                id="myForm"
+                >
+
+
+                <div class="txt_field">
+                  <input id="datetime" name="date" class="date" required />
+                  <label>Date</label>
+                </div>
+
+                <div class="time">
+
+                    <div class="time-schedule">
+                    <input type="radio" name="time" id="time" value="8am" class="times">
+                      <label >8am - 9am</label>
+                    </div>
+                    <div class="time-schedule">
+                      <input type="radio" name="time" id="time" value="10am">
+                      <label for="2nd">10am - 11am</label >
+                    </div>
+                    <div class="time-schedule">
+                      <input type="radio" name="time" id="time" value="12pm">
+                      <label for="3rd">12pm - 1pm</label >
+                    </div>
+                    <div class="time-schedule">
+                      <input type="radio" name="time" id="time" value="2pm">
+                      <label for="4th">2pm - 3pm</label >
+                    </div>
+                    <div class="time-schedule time-item">
+                      <input type="radio" name="time" id="time" value="4pm">
+                      <label for="5th">4pm - 5pm</label >
+                    </div>
+
+                </div>  
+
+                    <div class="services">
+
+                      <select name="services" id="services" class="select" required>
+                        <option value="" disabled selected>--Select Services--</option>
+                        <option value="Consultation">Consultation</option>
+                        <option value="Oral Exam">Oral Exam</option>
+                        <option value="Oral Prophylaxis">Oral Prophylaxis</option>
+                        <option value="Dental Restoration">Dental Restoration</option>
+                        <option value="Dental Extraction">Dental Extraction</option>
+                        <option value="Removal of Impacted tooth Surgical">
+                          Removal of Impacted tooth Surgical
+                        </option>
+                        <option value="Facbrication of removal prosthesis">
+                          Facbrication of removal prosthesis
+                        </option>
+                        <option value="Orthodentic treatment">Orthodentic treatment</option>
+                        <option value="Aesthetic Dentistry">Aesthetic Dentistry</option>
+                        <option value="Root Canal treatment">
+                          Root Canal treatment
+                        </option></select
+                      >
+
+                    </div>
+
+                  <input type="submit" value="Submit"/>
+                  
+                </form>
+
+              </div>
+
+            </div>
+
+          </div>
+      </div>
+
+      <script>
+        flatpickr("#datetime", {
+          enableTime: false,
+          dateFormat: "Y-m-d",
+          minDate: "today",
+          maxDate: new Date().fp_incr(14), // 14 days from now
+          //minTime: "08:00",
+          //maxTime: "17:00"
+        });
+        document
+          .getElementById("myForm")
+          .addEventListener("submit", function (event) {
+            alert('Online Consulation appointment successfully')
+        })
+      </script>
+    
+</body>
 </html>

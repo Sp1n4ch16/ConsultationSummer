@@ -149,10 +149,6 @@ const appointmentSchema = new mongoose.Schema(
     datetime:{
       type:Date
     },
-    description: {
-      type: String,
-      required: [true, "Please enter description"],
-    },
     services: {
       type: String,
       required: [true, "Please enter your services"],

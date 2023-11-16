@@ -1,100 +1,125 @@
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Online Consultation</title>
-    <link rel="stylesheet" href="/PConsult.css" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/PConsult.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-  </head>
-  <body>
-    <div class="sidebar">
-      <header><%= patientName %></header>
-      <ul>
-          <li><a href="/Phome"><i class="fas fa-qrcode"></i>Dashboard</a></li>
-          <li><a href="/PAppointment"><i class="fas fa-link"></i>Appointment</a></li>
-          <li><a href="/myappointment"><i class="fas fa-calendar-week"></i>My Appointment</a></li>
-          <li><a href="/history"><i class="fas fa-question-circle"></i>History</a></li>
-          <div class="space"></div>
-          <li><a href="/MyAccount"><i class="fas fa-sliders-h"></i>My Account</a></li>
-          <li><a href="/"><i class="fas fa-envelope"></i>Logout</a></li>
-      </ul>
-  </div>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="./logo.png" alt="Logo.png">
+            <h2>EzDok</h2>
+        </div>
+        
+        <ul>
+            <li><a href="/PHome">Home</a></li>
+            <li><a href="/MyAccount"><%= patientName %></a></li>
+            <li><a href="/">Logout</a></li>
+        </ul>
+    </header>
 
     <div class="center">
-      <form
-        action="/POnlineConsult"
-        method="post"
-        enctype="multipart/form-data"
-        id="myForm"
-      >
-        <h1>Online Consultation Appointment</h1>
-        <div class="image">
-          <img src="/dentist.png" alt="Error" />
-        </div>
-        <% doc.forEach((doctor) => { %>
-        <div class="doctor"><%= doctor.full_name %></div>
-        <div class="doctor">₱<%= doctor.fee %></div>
-        <% }) %>
-        <div class="txt_field">
-          <input id="datetime" name="date" class="date" required />
-          <label>Date</label>
-        </div>
-        <div class="time">
-          <div class="time-schedule">
-            <input type="radio" name="time" id="time" value="8am" class="times">
-            <label >8am - 9am</label>
-          </div>
-          <div class="time-schedule">
-            <input type="radio" name="time" id="time" value="10am">
-            <label for="2nd">10am - 11am</label >
-          </div>
-          <div class="time-schedule">
-            <input type="radio" name="time" id="time" value="1pm">
-            <label for="3rd">1pm - 2pm</label >
-          </div>
-          <div class="time-schedule">
-            <input type="radio" name="time" id="time" value="2pm">
-          <label for="4th">2pm - 3pm</label >
-          </div>
-          <div class="time-schedule">
-            <input type="radio" name="time" id="time" value="3pm">
-            <label for="5th">3pm - 4pm</label >
-          </div>
-        </div>
+          <h1>Online Consultation Appointment</h1>
+          <div class="content">
 
-            <select name="description" id="description" class="select" required>
-              <option value="" disabled selected>--Chief Complain--</option>
-              <option value="sensitivity to cold or hot food or drinks">sensitivity to cold or hot food or drinks</option>
-              <option value="loose teeth">loose teeth</option>
-              <option value="sudden pain when eating cold or sweet foods">sudden pain when eating cold or sweet foods</option>
-              <option value="tooth changing color or shape">tooth changing color or shape</option>
-              <option value="worn teeth, including holes, cracks, or chips on the tooth">worn teeth, including holes, cracks, or chips on the tooth</option>
-              <option value="bleeding or swollen gums">bleeding or swollen gums</option>
-              <option value="gum pain">gum pain</option>
-              <option value="swollen cheeks">swollen cheeks</option>
-              <option value="clicking jaw">clicking jaw</option>
-            </select>.
+            <div class="left">
 
-        <input type="submit" value="Submit"/>
-      </form>
-    </div>
+              <div class="image">
+                <img src="./dentist.png" alt="Error" />
+              </div>
+              <div class="doctor">Dr. Ryan Pangilinan</div>
+              <div class="doctor">₱350</div>
 
-    <script>
-      flatpickr("#datetime", {
-        enableTime: false,
-        dateFormat: "Y-m-d",
-        minDate: "today",
-        maxDate: new Date().fp_incr(14), // 14 days from now
-        //minTime: "08:00",
-        //maxTime: "17:00"
-      });
-      document
-        .getElementById("myForm")
-        .addEventListener("submit", function (event) {
-          alert('Online Consulation appointment successfully')
-      })
-    </script>
-  </body>
+            </div>
+
+
+            <div class="right">
+
+              <div class="container">
+                <h1>Fill up the form</h1>
+                <form
+                action="/POnlineConsult"
+                method="post"
+                enctype="multipart/form-data"
+                id="myForm"
+                >
+
+
+                <div class="txt_field">
+                  <input id="datetime" name="date" class="date" required />
+                  <label>Date</label>
+                </div>
+
+                <div class="time">
+
+                    <div class="time-schedule">
+                    <input type="radio" name="time" id="time" value="8am" class="times">
+                      <label >8am - 9am</label>
+                    </div>
+                    <div class="time-schedule">
+                      <input type="radio" name="time" id="time" value="10am">
+                      <label for="2nd">10am - 11am</label >
+                    </div>
+                    <div class="time-schedule">
+                      <input type="radio" name="time" id="time" value="1pm">
+                      <label for="3rd">1pm - 2pm</label >
+                    </div>
+                    <div class="time-schedule">
+                      <input type="radio" name="time" id="time" value="2pm">
+                      <label for="4th">2pm - 3pm</label >
+                    </div>
+                    <div class="time-schedule time-item">
+                      <input type="radio" name="time" id="time" value="3pm">
+                      <label for="5th">3pm - 4pm</label >
+                    </div>
+
+                </div>  
+
+                      <select name="description" id="description" class="select" required>
+
+                        <option value="" disabled selected>--Chief Complain--</option>
+                        <option value="sensitivity to cold or hot food or drinks">sensitivity to cold or hot food or drinks</option>
+                        <option value="loose teeth">loose teeth</option>
+                        <option value="sudden pain when eating cold or sweet foods">sudden pain when eating cold or sweet foods</option>
+                        <option value="tooth changing color or shape">tooth changing color or shape</option>
+                        <option value="worn teeth, including holes, cracks, or chips on the tooth">worn teeth, including holes, cracks, or chips on the tooth</option>
+                        <option value="bleeding or swollen gums">bleeding or swollen gums</option>
+                        <option value="gum pain">gum pain</option>
+                        <option value="swollen cheeks">swollen cheeks</option>
+                        <option value="clicking jaw">clicking jaw</option>
+
+                      </select>.
+                    <br>
+                  <input type="submit" value="Submit"/>
+                  
+                </form>
+
+              </div>
+
+            </div>
+
+          </div>
+      </div>
+
+      <script>
+        flatpickr("#datetime", {
+          enableTime: false,
+          dateFormat: "Y-m-d",
+          minDate: "today",
+          maxDate: new Date().fp_incr(14), // 14 days from now
+          //minTime: "08:00",
+          //maxTime: "17:00"
+        });
+        document
+          .getElementById("myForm")
+          .addEventListener("submit", function (event) {
+            alert('Online Consulation appointment successfully')
+        })
+      </script>
+    
+</body>
 </html>

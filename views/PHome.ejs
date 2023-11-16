@@ -4,47 +4,80 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="/phome.css" />
   </head>
-  <body>
-    <div class="sidebar">
-      <header><%= patientName %></header>
-      <ul>
-          <li><a href="/PAppointment"><i class="fas fa-qrcode"></i>Appointment</a></li>
-          <li><a href="/POnlineConsult"><i class="fas fa-stream"></i>Online Consultation</a></li>
-          <li><a href="/myappointment"><i class="fas fa-calendar-week"></i>My Appointment</a></li>
-          <li><a href="/history"><i class="fas fa-question-circle"></i>History</a></li>
-          <div class="space"></div>
-          <li><a href="/MyAccount"><i class="fas fa-sliders-h"></i>My Account</a></li>
-          <li><a href="/"><i class="fas fa-envelope"></i>Logout</a></li>
-      </ul>
-  </div>
+<body>
+    <header>
+        <div class="logo">
+            <img src="/logo.png" alt="Logo.png">
+            <h2>EzDok</h2>
+        </div>
+        
+        <ul>
+            <li class="active-li"><a href="/PHome" class="active-a">Home</a></li>
+            <li><a href="/MyAccount"><%= patientName %></a></li>
+            <li><a href="/">Logout</a></li>
+        </ul>
+    </header>
 
-    <div class="center">
-      <input
-        type="submit"
-        value="Online Consultation"
-        onclick="document.location= './POnlineConsult' "
-      />
-      <br />
-      <input
-        type="submit"
-        value="Make an Appointment"
-        onclick="document.location= './PAppointment' "
-      />
-      <br />
-      <input
-        type="submit"
-        value="My Appointment"
-        onclick="document.location= './myappointment' "
-      />
-      <br />
-      <input
-        type="submit"
-        value="My History"
-        onclick="document.location= './history' "
-      />
+    <div class="content">
+
+        <div class="Online-Consult-Button container">
+            <div class="left">
+                <img src="/Online-doctor-consultation.png" alt="" class="container-img">
+            </div>
+            <div class="right">
+                <h2>Online Consultation</h2>
+                <p>Online consultation allows you to consult, get diagnosed or treated by a doctor remotely through live chat, text enquiry, face-to-face video conference, or phone call with minimal to no physical contact.</p>
+                <button class="button" onclick="document.location= './POnlineConsult'">
+                    <i class="fa-solid fa-plus"></i>
+                    Create Consultation
+                </button>
+            </div>
+        </div>
+
+        <div class="Appointment-Button container">
+            <div class="left">
+                <img src="/Appointment-logo.png" alt="" class="container-img">
+            </div>
+            <div class="right flex">
+                <h2>Appointment</h2>
+                <p>Appointment allows you to consult, get diagnosed or treated by going to clinic or by physiscal contact.</p>
+                <button class="button" onclick="document.location= './PAppointment' ">
+                    <i class="fa-solid fa-plus"></i>
+                    Create Appointment
+                </button>
+            </div>
+        </div>
+
+        <div class="My-Appointment-Button container">
+            <div class="left">
+                <img src="/MyAppointment-logo.png" alt="" class="container-img">
+            </div>
+            <div class="right flex">
+                <h2>My Appointment</h2>
+                <p>My Appointment shows you all of the schedule you make it's either Online Consultation or through Appointment.</p>
+                <button class="button" onclick="document.location= './myappointment' ">
+                    <i class="fa-solid fa-calendar-plus"></i>
+                    View my Schedule
+                </button>
+            </div>
+        </div>
+
+        <div class="History-Button container">
+            <div class="left">
+                <img src="/MyHistory-logo.png" alt="" class="container-img">
+            </div>
+            <div class="right flex">
+                <h2>My History</h2>
+                <p>My History shows you all of the transaction or schedule that you engage with this application.</p>
+                <button class="button" onclick="document.location= './history' ">
+                    <i class="fa-solid fa-file-medical"></i>
+                    View my History
+                </button>
+            </div>
+        </div>
     </div>
-    
-  </body>
+</body>
 </html>
