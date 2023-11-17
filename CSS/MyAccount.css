@@ -12,6 +12,7 @@ body {
   width: 400px;
   background: #042331;
   border-radius: 10px;
+  margin-top: 2rem;
 }
 .center h1 {
   text-align: center;

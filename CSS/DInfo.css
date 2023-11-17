@@ -31,31 +31,6 @@ p {
   display: flex;
 }
 
-/* =================
-  NAV BAR
-================= */
-header {
-  display: flex;
-  justify-content: space-between;
-
-  padding: 0 10%;
-  height: 50px;
-  background-color: #042331;
-}
-.logo{
-  display: flex;
-  align-items: center;
-}
-.logo img {
-  height: 80%;
-  border-radius: 50%;
-  margin: 0 10px;
-}
-
-.logo h2 {
-  color: white;
-}
-
 .center {
   position: absolute;
   top: 50%;
@@ -64,7 +39,7 @@ header {
   width: 400px;
   background: #042331;
   border-radius: 10px;
-  margin-top: 1rem;
+  margin-top: 2rem;
 }
 .center h1 {
   text-align: center;

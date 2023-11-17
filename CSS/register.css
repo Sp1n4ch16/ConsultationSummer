@@ -3,15 +3,19 @@ body {
   padding: 0;
   font-family: montserrat;
   background: linear-gradient(112.6deg, rgb(56, 24, 40) -10.7%, rgb(23, 148, 185) 100.2%);;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .center {
-  position: absolute;
+  /* position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%); */
   width: 400px;
   background: #042331;
   border-radius: 10px;
+  margin: 2rem;
 }
 .center h1 {
   text-align: center;
@@ -111,4 +115,24 @@ label{
   background-color: #FC2947;
   color: white;
   height: 50px;
+}
+
+button {
+  margin-bottom: 20px;
+  width: 100%;
+  height: 50px;
+  border: 1px solid;
+  background: #042331;
+  border-radius: 25px;
+  font-size: 18px;
+  color: #e9f4fb;
+  font-weight: 700;
+  cursor: pointer;
+  outline: none;
+}
+
+button:hover{
+  background-color: #FFF;
+  color: #042331;
+  transition: 0.5s;
 }
