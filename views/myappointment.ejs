@@ -105,7 +105,8 @@
                     <td><%= onlineConsultation.paid %></td>
                     <td><%= onlineConsultation.status %></td>
                     <td class="action">
-                        <button class="join-button" onclick="document.location= './room'" <%= onlineConsultation.enabled ? '' : 'disabled' %>>Join</button>
+                        <!--<button class="join-button" onclick="document.location= './room'" <%= onlineConsultation.enabled ? '' : 'disabled' %>>Join</button> -->
+                        <button class="join-button" onclick="document.location= './room'">Join</button>
                         <button class="cancel-button">Cancel</button>
                         <button class="payment-button" <%= onlineConsultation.paymentEnabled ? '' : 'disabled' %>>Payment</button>
                     </td>
